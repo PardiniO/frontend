@@ -1,0 +1,111 @@
+:root {
+    --color-1a: #dcf0ce78;
+
+    --color-1: #dcf0ce;
+    --color-2: #58a384;
+    --color-3: #4e6c50;
+    --color-4: #395144;
+
+    --color-5: #40624B;
+    --color-6: #6A9D64;
+    --color-7: #ACCF93;
+    --color-8: #F7F4D1;
+}
+
+#navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: var(--color-1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    filter: sepia(0.09);
+
+    nav {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+
+        .menu-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--color-4);
+
+            svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            a {
+                font-family: sans-serif;
+                font-size: 1rem;
+                font-weight: 500;
+                color: var(--color-4);
+                text-decoration: none;
+                padding: 0.5rem 0.75rem;
+                transition: all 0.4s ease;
+
+                &:hover {
+                    background-color: var(--color-4);
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px){
+        nav {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .search-bar {
+                order: 2;
+                flex: 1;
+                margin-top: 0.5rem;
+                max-width: 100%;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                background: var(--color-1);
+                border-top: 1px solid var(--color-4);
+                padding: 0.5rem 0;
+
+                li {
+                    text-align: center;
+                }
+
+                &.open {
+                    display: flex;
+                }
+            }
+
+            .nav-links.left {
+                order: 3;
+            }
+            .nav-links.rigth {
+                order: 4;
+            }
+        }
+    }
+}
