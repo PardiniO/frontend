@@ -17,6 +17,12 @@ import { ReaderComponent } from './pages/reader/reader.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { DiscoverComponent } from './pages/discover/discover.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { UploaderComponent } from './pages/uploader/uploader.component';
+import { StatsComponent } from './pages/stats/stats.component';
+import { ReadingContainerComponent } from './components/uploader/reading-container/reading-container.component';
+import { EbookViewerComponent } from './components/uploader/ebook-viewer/ebook-viewer.component';
+import { ReadingControlsComponent } from './components/uploader/reading-controls/reading-controls.component';
+import { ReadingProgressComponent } from './components/uploader/reading-progress/reading-progress.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +40,13 @@ import { SettingsComponent } from './pages/settings/settings.component';
     ReaderComponent,
     ProfileComponent,
     DiscoverComponent,
-    SettingsComponent
+    SettingsComponent,
+    UploaderComponent,
+    StatsComponent,
+    ReadingContainerComponent,
+    EbookViewerComponent,
+    ReadingControlsComponent,
+    ReadingProgressComponent
   ],
   imports: [
     BrowserModule,
