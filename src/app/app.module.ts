@@ -15,6 +15,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { UploaderComponent } from './pages/uploader/uploader.component';
 import { StatsComponent } from './pages/stats/stats.component';
+import { LoginComponent } from './pages/login/login.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { StatsComponent } from './pages/stats/stats.component';
     SettingsComponent,
     UploaderComponent,
     StatsComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
