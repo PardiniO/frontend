@@ -1,1 +1,24 @@
-<p>reader works!</p>
+<div class="reader-container">
+    <div class="reader-toolbar">
+        <button (click)="toggleNotes()">Notas</button>
+        <button (click)="toggleHighlights()">Resaltado</button>
+    </div>
+
+    <div class="content">
+        <ng-extended-pdf-viewer 
+            [src]="currentBook.fileUrl"
+            [page]="currentPage"
+            [minifiedJSLibraries]="false"
+            [use-sidebar]="false"
+            [showBorders]="false"
+            [height]="'100%'"
+            [showToolbar]="true"
+            [showFindButton]="true"
+            (pagesLoaded)="onPdfLoaded($event)"
+            (pageChange)="onPageChange($event)"
+        ></ng-extended-pdf-viewer>
+        <ng-container *ngIf="currentBook?.format === 'epub'">
+            <div id="epub-container"></div>
+        </ng-container>
+    </div>
+</div>

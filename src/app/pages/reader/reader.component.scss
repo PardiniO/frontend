@@ -1,0 +1,27 @@
+.reader-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: #f4f4f4;
+}
+
+.reader-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.5rem;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 10;
+}
+
+.reader-content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+}
+
+ngx-extended-pdf-viewer,
+#epub-container {
+    width: 100%;
+    height: 100%;
+}
