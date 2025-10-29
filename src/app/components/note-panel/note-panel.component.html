@@ -1,0 +1,16 @@
+<div class="notes-pael">
+    <h3>Nota (pág. {{ currentPage }})</h3>
+    <div class="note-form">
+        <textarea [(ngModel)]="newNote" placeholder="Escribir una nota..."></textarea>
+        <button (click)="addNote()">Agregar</button>
+    </div>
+    <div class="note-list" *ngIf="notes.length; else empty">
+        <div class="note" *ngFor="let note of notes">
+            <p>{{ note.text }}</p>
+            <button (click)="deleteNote(note.id)">Borrar</button>
+        </div>
+    </div>
+    <ng-template #empty>
+        <p class="empty">No hay notas en esta página</p>
+    </ng-template>
+</div>

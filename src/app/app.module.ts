@@ -18,6 +18,7 @@ import { StatsComponent } from './pages/stats/stats.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { NotePanelComponent } from './components/note-panel/note-panel.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     LoginComponent,
     RegisterComponent,
     SidebarComponent,
+    NotePanelComponent,
   ],
   imports: [
     BrowserModule,

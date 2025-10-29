@@ -1,5 +1,5 @@
 export interface INote {
-    id: number;
+    id?: number;
     bookId: number;
     page: number;
     text: string;
