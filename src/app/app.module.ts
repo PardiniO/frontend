@@ -19,6 +19,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NotePanelComponent } from './components/note-panel/note-panel.component';
+import { HighlightToolbarComponent } from './components/highlight-toolbar/highlight-toolbar.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { NotePanelComponent } from './components/note-panel/note-panel.component
     RegisterComponent,
     SidebarComponent,
     NotePanelComponent,
+    HighlightToolbarComponent,
   ],
   imports: [
     BrowserModule,

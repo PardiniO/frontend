@@ -1,0 +1,12 @@
+<div class="highligh-toolbar">
+    <div class="color-picker">
+        <div *ngFor="let color of colors"
+            class="color"
+            [style.background]="color"
+            [class.selected]="color === selectedColor"
+            (click)="selectedColor(color)">
+        </div>
+    </div>
+
+    <button (click)="confirmHighlight()"></button>
+</div>

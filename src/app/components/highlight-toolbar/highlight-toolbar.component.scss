@@ -1,0 +1,29 @@
+.highlight-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: white;
+    border-radius: 10px;
+    padding: 0.5rem;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+
+    .color-picker {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .color {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid transparent;
+
+        &.selected {
+            border-color: black;
+        }
+    }
+}
