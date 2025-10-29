@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import {  } from "../../services/";
+import { ReaderService } from "../../services/readerService";
 import { IBook } from "../../interfaces/book";
 import { PagesLoadedEvent, PageNumberChange } from "ngx-extended-pdf-viewer";
 
@@ -49,6 +49,11 @@ export class ReaderComponent implements OnInit, OnDestroy{
 
   toggleHighlight() {
     this.showHighlights = !this.showHighlights;
+  }
+
+  onHighlights(color: string) {
+    console.log('Texto resaltado con color:', color);
+    this.showHighlights = false;
   }
 
   onPdfLoaded(event: PagesLoadedEvent) {

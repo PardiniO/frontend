@@ -20,6 +20,10 @@ export class NoteService {
     return this.http.post<INote>(`${this.apiUrl}/books${note.bookId}/notes`, note);
   }
 
+  updateNote(bookId: number, noteId: number, payload: Partial<INote>) {
+    return this.http.put<INote>(`${this.apiUrl}/books/${bookId}/notes/${noteId}`, payload);
+  }
+
   deleteNotes(bookId: number, noteId: number) {
     return this.http.delete(`${this.apiUrl}/books/${bookId}/notes/${noteId}`);
   }
