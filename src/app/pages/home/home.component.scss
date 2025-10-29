@@ -1,0 +1,17 @@
+.home-layout {
+    display: flex;
+    height: calc(100hv - 60px);
+    background-color: #fafafa;
+
+    app-sidebar {
+        width: 250px;
+        background: #ffffff;
+        border-right: 1px solid #ddd;
+    }
+
+    .main-content {
+        flex: 1;
+        padding: 1.5rem;
+        overflow-y: auto;
+    }
+}

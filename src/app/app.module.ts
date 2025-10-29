@@ -17,6 +17,7 @@ import { UploaderComponent } from './pages/uploader/uploader.component';
 import { StatsComponent } from './pages/stats/stats.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RegisterComponent } from './pages/register/register.component';
     StatsComponent,
     LoginComponent,
     RegisterComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,

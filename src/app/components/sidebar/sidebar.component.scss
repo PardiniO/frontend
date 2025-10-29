@@ -1,0 +1,13 @@
+.sidebar {
+    list-style: none;
+    padding: 1.5rem;
+    li {
+        margin: 1rem 0;
+        font-weight: 500;
+        cursor: pointer;
+        color: #333;
+        &.active, &:hover {
+            color: #4a6cf7;
+        }
+    }
+}
