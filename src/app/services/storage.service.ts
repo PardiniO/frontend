@@ -12,7 +12,6 @@ export class StorageService {
   setToken(token: string) {
     localStorage.setItem(this.TOKEN_KEY, token);
   }
-
   getToken(): string | null {
     return localStorage.getItem(this.TOKEN_KEY);
   }
@@ -24,11 +23,9 @@ export class StorageService {
   setRefresh(token: string) {
     localStorage.setItem(this.REFRESH_KEY, token);
   }
-
   getRefresh(): string | null {
     return localStorage.getItem(this.REFRESH_KEY);
   }
-
   clearRefresh(token: string) {
     localStorage.removeItem(this.REFRESH_KEY);
   }

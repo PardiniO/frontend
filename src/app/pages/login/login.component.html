@@ -1,1 +1,19 @@
-<p>login works!</p>
+<section class="auth-container">
+    <div class="auth-card">
+        <h2>Iniciar sesión</h2>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <label for="email">Email</label>
+            <input type="email" formControlName="password" id="email" placeholder="ejemplo@mail.com"/>
+
+            <label for="password">Contraseña</label>
+            <input type="password" formControlName="password" id="password" placeholder="********">
+
+            <button type="submit" [disabled]="form.invalid">Entrar</button>
+        </form>
+        <p class="redirect">
+            ¿No tenés cuenta?
+            <a routerLink="/register">Registrate</a>
+        </p>
+        <p class="error" *ngIf="error">{{ error }}</p>
+    </div>
+</section>
