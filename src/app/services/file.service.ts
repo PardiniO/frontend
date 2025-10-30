@@ -1,32 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
-import { IFile } from '../interfaces/file';
+import { environment } from "../../environments/environment";
+import { IFileUploadResponse, IFileDeleteResponse } from '../interfaces/file';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileService {
+  private apiUrl = `${environment.apiUrl}/files`;
 
   constructor(private http: HttpClient) { }
 
-  uploadFile(file: IFile): Observable<IFile> {
+  uploadFile(file: File): Observable<IFileUploadResponse> {
     const formData = new FormData();
-    formData.append('documento', file, file.name);
+    formData.append('file', file);
 
-    // Endpoint: POST /api/file/upload
-    // El backend es responsable de:
-    // 1. Guardar el archivo en el almacenamiento
-    // 2. Extraer metadatos (título, autor) del PDF/EPUB
-    // 3. Crear la entidad FILE en la base de datos
-    // 4. Devolver la entidad IFile al frontend
+    return this.http.post<IFileUploadResponse>(`${this.apiUrl}/upload`, formData);
+  }
 
-    return this.http.post<IFile>('/api/files/upload', formData, {
-      reportProgress: true,
-      observe: 'events'
-    }).pipe (
-      // Aquí puedes user un 'tap' o 'map' para manejar el evento de progreso
-      // y finalmente devolver solo la IFile al componente cuando esté completo
-    );
+  deleteFile(fileUrl: string): Observable<IFileDeleteResponse> {
+    return this.http.post<IFileDeleteResponse>(`${this.apiUrl}/delete`, { fileUrl });
+  }
+
+  dowloadFile(fileUrl: string): Observable<Blob> {
+    return this.http.get(fileUrl, { responseType: 'blob' });
   }
 }
