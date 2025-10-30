@@ -19,4 +19,28 @@ export class BookService {
   getBooks(): Observable<IBook[]> {
     return this.http.get<IBook[]>(`${this.apiUrl}`)
   }
+
+  getBooksById(id: number): Observable<IBook> {
+    return this.http.get<IBook>(`${this.apiUrl}/${id}`);
+  }
+
+  uploadBooks(file: File, title: string, author?: string): Observable<IBook> {
+    const format = file.name.endsWith('.epub') ? 'epub' : 'pdf';
+
+    const formData = new FormData();
+    formData.append('archivo', file);
+    formData.append('titulo', title);
+    if (author) formData.append('autor', author);
+    formData.append('formato', format);
+
+    return this.http.post<IBook>(`${this.apiUrl}/upload`, formData);
+  }
+
+  updateBook(id: number, bookData: Partial<IBook>): Observable<IBook> {
+    return this.http.put<IBook>(`${this.apiUrl}/${id}`, bookData);
+  }
+
+  deleteBook(id: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`);
+  }
 }
