@@ -1,38 +1,50 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { ReaderService } from "../../services/readerService";
+import { ReaderService } from "../../services/r";
+import { NoteService } from "../../services/note.service";
+import { HighlightService } from "../../services/highlight.service";
 import { IBook } from "../../interfaces/book";
+import { INote } from "../../interfaces/note";
+import { IHighlight, IRect } from "../../interfaces/highlight";
 import { PagesLoadedEvent, PageNumberChange } from "ngx-extended-pdf-viewer";
+
+declare const ePub: undefined;
 
 @Component({
   selector: 'app-reader',
   templateUrl: './reader.component.html',
   styleUrl: './reader.component.scss'
 })
-export class ReaderComponent implements OnInit, OnDestroy{
+export class ReaderComponent implements OnInit, OnDestroy, AfterViewInit{
   currentBook!: IBook;
   currentPage!: 1;
+  totalPages!: 0;
+  isLoaded = false;
+  
+  notes: INote[] = [];
+  highlights: IHighlight[] = [];
+
+  private epubBook: undefined = null;
+  private rendition: undefined = null;
+
+  @ViewChild('epubContainer', { static: false }) epubContainerRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('pdfContainer', { static: false }) pdfContainerRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('pdfOverlay', { static: false }) pdfOverlayRef!: ElementRef<HTMLDivElement>;
+
   showNotes!: false;
   showHighlights!: false;
-  totalPages!: 0;
 
   constructor(
     private route: ActivatedRoute,
-    private readerService: ReaderService
+    private readerService: ReaderService,
+    private noteService: NoteService,
+    private highlightService: HighlightService,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
     const bookId = Number(this.route.snapshot.paramMap.get('id'));
-    this.readerService.getBookById(bookId).subscribe((book) => {
-      this.currentBook = book;
-      if (book.currentPage) {
-        this.currentPage = book.currentPage;
-      }
-      
-      if (book.format === 'epub') {
-        this.loadedEpub(book.fileUrl);
-      }
-    });
+
   }
 
   loadedEpub(url: string){

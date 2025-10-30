@@ -6,4 +6,5 @@ export interface IBook {
     fileUrl: string;
     currentPage?: number;
     progress?: number;
+    status?: 'leyendo' | 'leido' | 'para-leer'
 }
