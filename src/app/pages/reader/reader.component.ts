@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild, NgZone,} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../../services/book.service';
 import { FileService } from '../../services/file.service';
 import { ReaderService } from '../../services/reader.service';
@@ -7,9 +7,9 @@ import { NoteService } from '../../services/note.service';
 import { HighlightService } from '../../services/highlight.service';
 import { IBook } from '../../interfaces/book';
 import { INote } from '../../interfaces/note';
-import { IHighlight } from '../../interfaces/highlight';
+import { IHighlight, IRect } from '../../interfaces/highlight';
 import { IEpub, IEpubRendition, IEpubContents } from "../../interfaces/epub";
-import { reduce } from 'rxjs';
+import { PagesLoadedEvent, IPdfViewerHighlight } from "ngx-extended-pdf-viewer";
 
 declare function ePub(url: string): IEpub;
 
@@ -20,34 +20,47 @@ declare function ePub(url: string): IEpub;
 })
 export class ReaderComponent implements OnInit, AfterViewInit, OnDestroy {
   currentBook!: IBook;
-  currentPage = 1;
-  totalPages = 0;
-  isLoaded = false;
+  currentPage: number = 1;
+  totalPages: number = 0;
+  isLoaded: boolean = false;
+
+  showNotes: boolean = false;
+  showHighlights: boolean = false;
 
   notes: INote[] = [];
   highlights: IHighlight[] = [];
+  pdfHighlights: IPdfViewerHighlight[] = [];
 
-  private epubBook: unknown = null;
+  private epubBook: IEpub | null = null;
   private rendition: IEpubRendition | null = null;
 
   @ViewChild('epubContainer') epubContainerRef?: ElementRef<HTMLDivElement>;
-  @ViewChild('pdfContainer') pdfContainerRef?: ElementRef<HTMLDivElement>;
 
   constructor(
     private route: ActivatedRoute,
-    private bookService: BookService,
-    private fileService: FileService,
+    private router: Router,
     private readerService: ReaderService,
     private noteService: NoteService,
     private highlightService: HighlightService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private bookService: BookService,
+    private fileService: FileService,
   ) {}
 
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
-    if (!idParam) return;
+    if (!idParam) {
+      console.error('ID de libro no proporcionado.');
+      this.router.navigate(['/library']);
+      return;
+    };
 
-    const bookId = Number(idParam);
+    const bookId: number = Number(idParam);
+    if (isNaN(bookId)) {
+      console.error('ID de libro inválido.');
+      this.router.navigate(['/library']);
+      return;
+    }
     this.loadBook(bookId);
   }
 
@@ -57,28 +70,29 @@ export class ReaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.bookService.getBooksById(bookId).subscribe({
       next: (book) => {
         this.currentBook = book;
+        if (book.currentPage) this.currentPage = book.currentPage;
         this.loadNotesAndHighlights(book.id);
 
         const fileUrl = book.fileUrl;
         if (book.format === 'pdf') this.initializePdf(fileUrl);
         if (book.format === 'epub') this.initializeEpub(fileUrl);
       },
-      error: (err) => console.error('Error al cargar libro:', err),
+      error: (err: unknown) => console.error('Error al cargar libro:', err),
     });
   }
 
   private loadNotesAndHighlights(bookId: number): void {
     this.noteService.getNotes(bookId).subscribe({
-      next: (notes) => (this.notes = notes),
-      error: (err) => console.error('Error al cargar notas:', err),
+      next: (notes: INote[]) => (this.notes = notes),
+      error: (err: unknown) => console.error('Error al cargar notas:', err),
     });
 
     this.highlightService.getHighlights(bookId).subscribe({
-      next: (highlights) => {
+      next: (highlights: IHighlight[]) => {
         this.highlights = highlights;
         if (this.isLoaded) this.renderHighlights();
       },
-      error: (err) => console.error('Error al cargar highlights:', err),
+      error: (err: unknown) => console.error('Error al cargar highlights:', err),
     });
   }
 
@@ -133,18 +147,24 @@ export class ReaderComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  /* ---------------- PDF ---------------- */
+  /* ---------------- PDF HANDLERS ---------------- */
 
-  private initializePdf(fileUrl: string): void {
+  private initializePdf(_fileUrl: string): void {
     this.isLoaded = true;
   }
 
-  onPdfLoaded(event: { pagesCount: number }): void {
+  onPdfLoaded(event: PagesLoadedEvent): void {
     this.totalPages = event.pagesCount;
+    if (this.currentBook.currentPage) {
+      this.currentPage = this.currentBook.currentPage;
+    }
+    this.renderHighlights();
+    console.log(`PDF cargado. Total de páginas: ${this.totalPages}`);
   }
 
-  onPageRendered(event: { pageNumber: number }): void {
-    this.currentPage = event.pageNumber;
+  onPageRendered(event: { PageNumberChange: number }): void {
+    this.currentPage = event.PageNumberChange;
+    console.log(`Página actual: ${this.currentPage}`);
   }
 
   onPdfMouseUp(): void {
@@ -178,7 +198,43 @@ export class ReaderComponent implements OnInit, AfterViewInit, OnDestroy {
   /* ---------------- RENDER HIGHLIGHTS ---------------- */
 
   private renderHighlights(): void {
-    if (!this.isLoaded || this.currentBook.format !== 'epub' || !this.rendition) return;
+    if (!this.isLoaded) return;
+
+    if (this.currentBook.format === 'epub' && this.rendition) {
+      console.log(`Aplicando ${this.highlights.length} resaltados al archivo EPUB...`);
+
+      this.highlights
+        .filter((highlight: IHighlight) => highlight.type === 'epub' && highlight.cfi)
+        .forEach((highlight: IHighlight) => {
+          try {
+            this.rendition?.annotations.add('highlight', highlight.cfi!, () => {}, {
+              fill: highlight.color,
+              'fill-opacity': '0.6',
+              'mix-blend-mode': 'multiply',
+            });
+          } catch (err: unknown) {
+            console.error(`Error aplicando resaltado al EPUB con CFI ${highlight.cfi}:`, err);
+          }
+        });
+        
+      this.rendition.display();
+    }
+
+    if (this.currentBook.format === 'pdf') {
+      this.pdfHighlights = this.highlights
+        .filter(highlight => highlight.type === 'pdf' && highlight.rects)
+        .flatMap(highlight => {
+          return (highlight.rects as IRect[]).map((rect: IRect): IPdfViewerHighlight => ({
+            page: rect.page,
+            top: rect.top,
+            left: rect.left,
+            width: rect.width,
+            height: rect.height,
+            color: highlight.color,
+            id: highlight.id
+          }));
+        });
+    }
 
     this.highlights
       .filter((highlight) => highlight.type === 'epub' && highlight.cfi)
@@ -209,7 +265,10 @@ export class ReaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.currentBook) {
-      this.readerService.saveProgress(this.currentBook.id, this.currentPage).subscribe();
+      this.readerService.saveProgress(this.currentBook.id, this.currentPage).subscribe(
+        () => console.log('Progreso de lectura guardado'),
+        (err: unknown) => console.error('Fallo al guardar progreso:', err)
+      );
     }
 
     try {
@@ -217,5 +276,30 @@ export class ReaderComponent implements OnInit, AfterViewInit, OnDestroy {
     } catch (err) {
       console.warn('Error destruyendo EPUB:', err);
     }
+  }
+
+  /* ---------------- BUTTON ACTIONS ---------------- */
+  toggleNotes() {
+    this.showNotes = !this.showNotes;
+    if (this.showNotes) this.showHighlights = false;
+  }
+
+  toggleHighlights() {
+    this.showHighlights = !this.showHighlights;
+    if (this.showHighlights) this.showNotes = false;
+  }
+
+  goBack() {
+    this.router.navigate(['/library']);
+    console.log('Volver a la biblioteca');
+  }
+
+  openSettings() {
+    this.router.navigate(['/settings'], { queryParams: { returnUrl: this.router.url } });
+    console.log('Abrir ajustes de lectura');
+  }
+
+  onHighlight(color: string) {
+    console.log('Resaltado seleccionado:', color);
   }
 }

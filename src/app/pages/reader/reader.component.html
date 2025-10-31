@@ -1,35 +1,59 @@
-<div class="reader-container">
-    <div class="reader-toolbar">
-        <button (click)="toggleNotes()">Notas</button>
-        <button (click)="toggleHighlights()">Resaltador</button>
-    </div>
+<div class="reader-page-wrapper">
+    <header class="reader-toolbar">
+        <div class="toolbar-left">
+            <button class="btn-left" (click)="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <span class="book-title">{{ currentBook?.title }}</span>
+        </div>
+        <div class="toolbar-right">
+            <button class="btn-icon" [class.active]="showHighlights" (click)="toggleHighlights()">
+                <i class="fas fa-highlighter"></i>
+            </button>
+            <span class="book-icon" (click)="openSettings()">
+                <i class="fas fa-cog"></i>
+            </span>
+        </div>
+    </header>
 
-    <div class="reader-content">
-        <ng-extended-pdf-viewer 
-            [src]="currentBook.fileUrl"
-            [page]="currentPage"
-            [minifiedJSLibraries]="false"
-            [use-sidebar]="false"
-            [showBorders]="false"
-            [height]="'100%'"
-            [showToolbar]="true"
-            [showFindButton]="true"
-            (pagesLoaded)="onPdfLoaded($event)"
-            (pageChange)="onPageChange($event)"
-        ></ng-extended-pdf-viewer>
-        <ng-container *ngIf="currentBook?.format === 'epub'">
-            <div id="epub-container"></div>
+    <main class="reader-main-content">
+        <ng-container *ngIf="currentBook?.format === 'pdf'">
+            <ng-extended-pdf-viewer 
+                [src]="currentBook.fileUrl"
+                [page]="currentPage"
+                [minifiedJSLibraries]="false"
+                [use-sidebar]="false"
+                [showBorders]="false"
+                [height]="'100%'"
+                [showToolbar]="false" [showFindButton]="true"
+                (pagesLoaded)="onPdfLoaded($event)"
+                (pageChange)="onPageChange($event)"
+            ></ng-extended-pdf-viewer>
         </ng-container>
-    </div>
 
-    <app-notes-panel
-        *ngIf="showNotes"
-        [bookId]="currentBook.id"
-        [currentPage]="currentPage"
-    ></app-notes-panel>
+        <ng-container *ngIf="currentBook?.format === 'epub'">
+            <div #epubContainer class="epub-viewer-wrapper"></div>
+        </ng-container>
 
-    <app-highlight-toolbar
-        *ngIf="showHighlights"
-        (highligh)="onHighligh($event)"
-    ></app-highlight-toolbar>
+        <aside class="sidebar-panel" [class.is-open]="showNotes">
+            <app-notes-panel
+                [bookId]="currentBook.id"
+                [currentPage]="currentPage"
+            ></app-notes-panel>
+        </aside>
+
+        <aside class="sidebar-panel highligh-panel" [class.is-open]="showHighlights">
+            <app-highlight-toolbar
+                (highlight)="onHighligh($event)"
+            ></app-highlight-toolbar>
+        </aside>
+    </main>
+
+    <footer class="reader-footer-bar">
+        <app-progress-bar
+            [currentPage]="currentPage"
+            [totalPages]="totalPages"
+            [title]="currentBook?.title"
+        ></app-progress-bar>
+    </footer>
 </div>

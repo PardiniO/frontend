@@ -4,21 +4,30 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from "./pages/login/login.component";
 import { RegisterComponent } from "./pages/register/register.component";
 import { HomeComponent } from './pages/home/home.component';
+import { ReaderComponent } from "./pages/reader/reader.component";
 import { AuthGuard } from "./guards/auth.guard";
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  
   { 
     path: '', 
-    component: HomeComponent, 
     canActivate: [AuthGuard],
     children: [
-      { path: 'library', loadChildren: () => import('./pages/library/library.component').then(module => module.LibraryComponent) },
-      { path: '', redirectTo: 'library', pathMatch: 'full'}
-    ]
+      { path: 'home', component: HomeComponent },
+      { 
+        path: 'library', 
+        loadComponent: () => 
+          import('./pages/library/library.component').then(
+            module => module.LibraryComponent
+          ), 
+      },
+      { path: 'reader/:id', component: ReaderComponent},
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+    ],
   },
+
   { path: '**', redirectTo: '' }
 ];
 
