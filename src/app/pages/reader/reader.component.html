@@ -1,10 +1,10 @@
 <div class="reader-container">
     <div class="reader-toolbar">
         <button (click)="toggleNotes()">Notas</button>
-        <button (click)="toggleHighlights()">Resaltado</button>
+        <button (click)="toggleHighlights()">Resaltador</button>
     </div>
 
-    <div class="content">
+    <div class="reader-content">
         <ng-extended-pdf-viewer 
             [src]="currentBook.fileUrl"
             [page]="currentPage"
@@ -21,4 +21,15 @@
             <div id="epub-container"></div>
         </ng-container>
     </div>
+
+    <app-notes-panel
+        *ngIf="showNotes"
+        [bookId]="currentBook.id"
+        [currentPage]="currentPage"
+    ></app-notes-panel>
+
+    <app-highlight-toolbar
+        *ngIf="showHighlights"
+        (highligh)="onHighligh($event)"
+    ></app-highlight-toolbar>
 </div>

@@ -20,6 +20,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NotePanelComponent } from './components/note-panel/note-panel.component';
 import { HighlightToolbarComponent } from './components/highlight-toolbar/highlight-toolbar.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { HighlightToolbarComponent } from './components/highlight-toolbar/highli
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxExtendedPdfViewerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS,

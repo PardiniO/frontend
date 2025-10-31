@@ -10,10 +10,10 @@ export interface IEpubRendition {
     display(location?: string): void;
     destroy(): void;
     
-    on<T extends keyof IEpubEventMap>(
-        event: T, 
-        callback: IEpubEventMap[T]
-    ): void;    
+    on: {
+        (event: 'selected', callback: IEpubEventMap['selected']): void
+        (event: string, callback: (...args: unknown[]) => void): void
+    };
 
     annotations: {
         add(

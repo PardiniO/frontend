@@ -56,7 +56,9 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/epubjs/dist/epub.js"
+            ]
           },
           "configurations": {
             "production": {
