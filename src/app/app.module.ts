@@ -21,6 +21,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NotePanelComponent } from './components/note-panel/note-panel.component';
 import { HighlightToolbarComponent } from './components/highlight-toolbar/highlight-toolbar.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     SidebarComponent,
     NotePanelComponent,
     HighlightToolbarComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

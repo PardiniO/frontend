@@ -1,0 +1,25 @@
+<div class="dashboard-grid">
+    <section class="quick-upload-card card">
+        <h2 class="card-title">Comenzar a leer</h2>
+        <p class="card-subtitle">Arrastrá tu EPUB o PDF acá</p>
+
+        <app-dropzone></app-dropzone>
+
+        <button class="btn-full-width btn-secondary" [routerLink]="['/load']">
+            Selecciona tu archivo
+        </button>
+    </section>
+
+    <section class="activity-summary-card card">
+        <h2 class="card-title">Continuar leyendo</h2>
+        <app-last-active-book></app-last-active-book>
+
+        <button class="btn-full-width btn-primary" [routerLink]="['/library']">
+            Ver mi biblioteca
+        </button>
+    </section>
+
+    <section class="stats-glance-card card">
+        <h2 class="card-title">Tu progreso</h2>
+    </section>
+</div>

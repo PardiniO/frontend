@@ -1,18 +1,24 @@
-<div class="dropzone"
+<div 
+    class="dropzone"
     (dragover)="onDragOver($event)"
     (dragleave)="onDragLeave($event)"
-    (drop)="onDrop($event)">
+    (drop)="onDrop($event)"
+    [class.is-hovering]="isDragging"
+>
 
-    <p *ngIf="!file">Arrastrá un archivo PDF/EPUB acá</p>
+    <i class="fas fa-cloud-upload-alt"></i>
+    <p *ngIf="!file">Arrastrá y soltá el archivo PDF/EPUB acá</p>
 
-    <input type="file"
-        #fileInput
+    <input type="file" multiple
         (change)="onFileSelected($event)"
         accept=".pdf, .epub"
-        hidden />
+        style="display: none;" #fileInput>
 
-    <p>O hacé click y seleccionalo</p>
-    <button
-        type="button"
-        (click)="fileInput.click()">Seleccionar archivo</button>
+    <button class="btn-upload" (click)="fileInput.click()">
+        O seleccioná el archivo
+    </button>
+
+    <div *ngIf="uploadStatus" class="status-message">
+        {{ uploadStatus }}
+    </div>
 </div>

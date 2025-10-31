@@ -1,17 +1,48 @@
+@import 'frontend\src\styles.scss';
+
+.shell-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 .home-layout {
     display: flex;
-    height: calc(100hv - 60px);
-    background-color: #fafafa;
+    height: calc(100vh - #{$home-nav-height});
+    background-color: $sencond-background-color;
 
     app-sidebar {
-        width: 250px;
-        background: #ffffff;
-        border-right: 1px solid #ddd;
+        width: $sidebar-width;
+        flex-shrink: 0;
+        background: $paper-color;
+        border-right: 1px solid $border-color;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
     }
-
+    
     .main-content {
         flex: 1;
-        padding: 1.5rem;
+        padding: 2rem;
         overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .home-layout {
+        flex-direction: column;
+        height: auto;
+
+        app-sidebar {
+            width: 100%;
+            height: auto;
+            border-bottom: 1px solid $border-color;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .main-content {
+            padding: 1rem;
+        }
     }
 }

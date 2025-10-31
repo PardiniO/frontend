@@ -10,6 +10,7 @@ import { INote } from '../../interfaces/note';
 import { IHighlight, IRect } from '../../interfaces/highlight';
 import { IEpub, IEpubRendition, IEpubContents } from "../../interfaces/epub";
 import { PagesLoadedEvent, IPdfViewerHighlight } from "ngx-extended-pdf-viewer";
+import { take } from 'rxjs';
 
 declare function ePub(url: string): IEpub;
 
@@ -264,11 +265,26 @@ export class ReaderComponent implements OnInit, AfterViewInit, OnDestroy {
   /* ---------------- CLEANUP ---------------- */
 
   ngOnDestroy(): void {
-    if (this.currentBook) {
-      this.readerService.saveProgress(this.currentBook.id, this.currentPage).subscribe(
-        () => console.log('Progreso de lectura guardado'),
-        (err: unknown) => console.error('Fallo al guardar progreso:', err)
+    if (this.currentBook && this.totalPages > 0) {
+      const calculatedProgress = Math.min(
+        100,
+        Math.round((this.currentPage / this.totalPages) * 100)
       );
+
+      this.readerService.saveProgress(
+        this.currentBook.id, 
+        this.currentPage,
+        calculatedProgress
+      )
+      .pipe(
+        take(1)
+      )
+      .subscribe({
+        next: () => {
+          console.log(`Progreso de lectura guardado: ${calculatedProgress}%`);
+        },
+        error: (err: unknown) => console.error('Fallo al guardar progreso:', err)
+      });
     }
 
     try {
