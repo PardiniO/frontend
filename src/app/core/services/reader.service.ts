@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { environment } from "../../environments/environment";
-import { IBook } from "../interfaces/book";
-import { IReadingHistory, IReadingProgress, IReadingStatus } from '../interfaces/reading';
+import { environment } from "../../../environments/environment";
+import { IBook } from "../../interfaces/book";
+import { IReadingHistory, IReadingProgress, IReadingStatus } from '../../interfaces/reading';
 
 type BookStatus = IReadingStatus['status'];
 

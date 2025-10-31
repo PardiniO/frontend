@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild, NgZone,} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookService } from '../../services/book.service';
-import { FileService } from '../../services/file.service';
-import { ReaderService } from '../../services/reader.service';
-import { NoteService } from '../../services/note.service';
-import { HighlightService } from '../../services/highlight.service';
+import { BookService } from '../../core/services/book.service';
+import { FileService } from '../../core/services/file.service';
+import { ReaderService } from '../../core/services/reader.service';
+import { NoteService } from '../../core/services/note.service';
+import { HighlightService } from '../../core/services/highlight.service';
 import { IBook } from '../../interfaces/book';
 import { INote } from '../../interfaces/note';
 import { IHighlight, IRect } from '../../interfaces/highlight';

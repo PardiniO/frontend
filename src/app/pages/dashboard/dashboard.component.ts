@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FileService } from "../../services/file.service";
-import { ReaderService } from "../../services/reader.service";
+import { FileService } from "../../core/services/file.service";
+import { ReaderService } from "../../core/services/reader.service";
 import { IBook } from "../../interfaces/book";
 import { catchError, last, Observable } from "rxjs";
 

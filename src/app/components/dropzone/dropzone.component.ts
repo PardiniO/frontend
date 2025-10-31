@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FileService } from "../../services/file.service";
+import { FileService } from "../../core/services/file.service";
 import { Router } from "@angular/router";
 import { IFileMetadata } from "../../interfaces/file";
 
@@ -48,7 +48,7 @@ export class DropzoneComponent {
     input.value = '';
   }
 
-  private handleFiles(files: IFILe[]): void {
+  private handleFiles(files: IFiLe[]): void {
     const validFiles = files.filter(file => file.name.endsWith('.pdf') || file.name.endsWith('.epub'));
     if (validFiles.length === 0) {
       this.uploadStatus = 'Solo se permiten archivos PDF o EPUB.';
