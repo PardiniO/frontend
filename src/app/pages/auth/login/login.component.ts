@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "../../../core/services/auth.service";
+import { take } from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,8 @@ import { AuthService } from "../../../core/services/auth.service";
 })
 export class LoginComponent implements OnInit{
     form!: FormGroup;
-    error!: '';
+    errorMessage: string = '';
+    isLoading: boolean = false;
   
   constructor(
     private formBuilder: FormBuilder,
@@ -25,18 +27,26 @@ export class LoginComponent implements OnInit{
     });
   }
 
-  onSubmit() {
-    if (this.form.invalid) return;
+  onSubmit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    };
 
-    const credentials = this.form.value as { email: string; password: string };
+    this.isLoading = true;
+    this.errorMessage = '';
 
-    this.auth.login(credentials).subscribe({
-      next: (res) => {
+    const credentials: { email: string; password: string } = this.form.value;
+
+    this.auth.login(credentials).pipe(take(1)).subscribe({
+      next: (res: { token: string }) => {
         this.auth.saveToken(res.token);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
+        this.isLoading = false;
       },
-      error: (err) => {
-        this.error = err.error?.message || 'Error al iniciar seción';
+      error: (err: unknown) => {
+        this.errorMessage = 'Credenciales inválidas o error de red.', err;
+        this.isLoading = false;
       }
     });
   }
