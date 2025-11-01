@@ -1,17 +1,19 @@
+@import 'frontend\src\styles.scss';
+
 .notes-panel {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 300px;
-    height: 100%;
     background: #fff;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     display: flex;
     flex-direction: column;
+    min-height: 100%;
+    box-sizing: border-box;
 
     h3 {
+        font-size: 1.25rem;
+        color: #333;
         margin: 0 0 1rem;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 0.5rem;
     }
 
     .note-form { 
@@ -19,37 +21,83 @@
         flex-direction: column;
 
         textarea {
-            resize: none;
-            height: 60px;
-            margin-bottom: 0.5rem;
+            resize: vertical;
+            min-height: 60px;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
         }
+
+        .btn-primary {
+            background-color: $primary-color;
+            color: white;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+
+            &:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid #f0f0f0;
+        margin: 1rem 0;
     }
 
     .notes-list {
         flex: 1;
         overflow: auto;
+        padding-top: 0.5rem;
     }
 
-    .note {
-        background: #f4f4f4;
-        padding: 0.5rem;
-        border-radius: 5px;
-        margin-bottom: 0.5rem;
+    .note-item {
+        background: $note-bg-color;
+        padding: 0.75rem;
+        border-radius: 6px;
+        margin-bottom: 0.75rem;
         position: relative;
+        border-left: 4px solid $primary-color;
 
-        button {
+        .note-text {
+            margin: 0 30px 0.5rem 0;
+            font-size: 0.95rem;
+            color: #444;
+            line-height: 1.4;
+        }
+
+        .btn-delete {
             position: absolute;
             top: 5px;
             right: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
+            color: $delete-color;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            padding: 5px;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        .note-date {
+            display: block;
+            font-size: 0.75rem;
+            color: #999;
+            text-align: right;
         }
     }
 
-    .empty {
+    .empty-state {
         text-align: center;
-        color: #888;
+        color: #aaa;
         font-style: italic;
+        padding: 1rem;
     }
 }

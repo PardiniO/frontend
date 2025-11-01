@@ -1,13 +1,30 @@
 <div class="notes-pael">
     <h3>Nota (pág. {{ currentPage }})</h3>
+
     <div class="note-form">
-        <textarea [(ngModel)]="newNote" placeholder="Escribir una nota..."></textarea>
-        <button (click)="addNote()">Agregar</button>
+        <textarea 
+            [(ngModel)]="newNote" 
+            placeholder="Escribir una nota..."
+            rows="3"
+            maxlength="500"
+        ></textarea>
+        <button 
+            (click)="addNote()"
+            [disabled]="!newNote.trim()"
+            class="btn-primary">
+            Agregar Nota
+        </button>
     </div>
+
+    <hr>
+
     <div class="note-list" *ngIf="notes.length; else empty">
-        <div class="note" *ngFor="let note of notes">
-            <p>{{ note.text }}</p>
-            <button (click)="deleteNote(note.id)">Borrar</button>
+        <div class="note-item" *ngFor="let note of notes">
+            <p class="note-text">{{ note.text }}</p>
+            <button (click)="deleteNote(note.id)" class="btn-delete" title="Boorar nota">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+            <span class="note-date">{{ note.createdAt | date: 'shortTime' }}</span>
         </div>
     </div>
     <ng-template #empty>

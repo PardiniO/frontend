@@ -1,12 +1,14 @@
 <div class="highligh-toolbar">
     <div class="color-picker">
         <div *ngFor="let color of colors"
-            class="color"
-            [style.background]="color"
+            class="color-swatch"
+            [style.background-color]="color"
             [class.selected]="color === selectedColor"
             (click)="selectedColor(color)">
         </div>
     </div>
 
-    <button (click)="confirmHighlight()"></button>
+    <button class="btn-confirm" (click)="confirmHighlight()">
+        <i class="fa fa-check"></i>
+    </button>
 </div>

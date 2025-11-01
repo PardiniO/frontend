@@ -6,16 +6,16 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrl: './highlight-toolbar.component.scss'
 })
 export class HighlightToolbarComponent {
-  colors = ['#D8658A', '#fafa75', '#38855D', '#73338D', '#2D7AAD', '#ffb347', '#77dd77'];
-  selectedColor = '#fafa75';
+  colors: string[] = ['#fbea53ff', '#62c078ff', '#ea7bd5ff', '#ffa861ff', '#b68cdbff'];
+  selectedColor: string = this.colors[0];
 
-  @Output() highlight = new EventEmitter<string>();
+  @Output() highlightColorSelected = new EventEmitter<string>();
 
-  selectColor(color: string) {
+  selectColor(color: string): void {
     this.selectedColor = color;
   }
 
-  confirmHighlight() {
-    this.highlight.emit(this.selectedColor);
+  confirmHighlight(): void {
+    this.highlightColorSelected.emit(this.selectedColor);
   }
 }
