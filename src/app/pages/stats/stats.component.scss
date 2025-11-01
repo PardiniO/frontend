@@ -1,0 +1,144 @@
+v// src/app/pages/stats/stats.component.scss
+
+$color-primary: #5c67f2;
+$color-secondary: #00bcd4;
+$color-tertiary: #f94144;
+$color-quaternary: #f8961e;
+$color-background-soft: #f8f9fa;
+$color-paper: #ffffff;
+$color-text-dark: #2c3e50;
+$color-shadow-light: rgba(0, 0, 0, 0.08);
+
+h1 {
+    font-size: 2.2rem;
+    color: $color-text-dark;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.card {
+    background: $color-paper;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px $color-shadow-light;
+    transition: transform 0.3s ease;
+    height: 100%;
+    box-sizing: border-box;
+    
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+    }
+}
+
+/* -------------------- 1. MÉTRICAS CLAVE GRID -------------------- */
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.metric-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    
+    i {
+        font-size: 2.5rem;
+        margin-bottom: 0.75rem;
+    }
+    .icon-primary { color: $color-primary; }
+    .icon-secondary { color: $color-secondary; }
+    .icon-tertiary { color: $color-tertiary; }
+    .icon-quaternary { color: $color-quaternary; }
+
+    .value {
+        font-size: 2rem;
+        font-weight: 800;
+        color: $color-text-dark;
+    }
+    .label {
+        font-size: 0.95rem;
+        color: #7f8c8d;
+        font-weight: 500;
+    }
+}
+
+/* -------------------- 2. ANÁLISIS GRID -------------------- */
+
+.analysis-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr; /* Gráfico más ancho que la lista */
+    gap: 2rem;
+    
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+        color: $color-text-dark;
+        margin-bottom: 1.5rem;
+        padding-bottom: 5px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+}
+
+/* --- Gráfico --- */
+.chart-card {
+    .chart-placeholder {
+        height: 250px;
+        background-color: #f7f7f7;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ccc;
+    }
+}
+
+/* --- Historial --- */
+.history-card {
+    .history-list {
+        list-style: none;
+        padding: 0;
+        
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.95rem;
+
+            .book-title {
+                font-weight: 600;
+                color: $color-text-dark;
+                flex-basis: 50%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .progress-info {
+                color: $color-secondary;
+                font-weight: 700;
+            }
+            .date-info {
+                color: #999;
+                font-size: 0.85rem;
+            }
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+        .empty {
+            text-align: center;
+            color: #aaa;
+            padding: 1rem 0;
+        }
+    }
+}

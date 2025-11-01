@@ -1,1 +1,58 @@
-<p>stats works!</p>
+<div class="stats-dashboard" *ngIf="userStats$ | async as stats">
+    
+    <h1>📈 Tu Resumen de Lectura</h1>
+    
+    <section class="metrics-grid">
+        
+        <div class="metric-card card">
+            <i class="fas fa-book-reader icon-primary"></i>
+            <span class="value">{{ stats.totalBooksRead }}</span>
+            <span class="label">Libros Leídos</span>
+        </div>
+
+        <div class="metric-card card">
+            <i class="fas fa-clock icon-secondary"></i>
+            <span class="value">{{ stats.totalHoursSpent | number: '1.0-1' }}h</span>
+            <span class="label">Tiempo Total</span>
+        </div>
+
+        <div class="metric-card card">
+            <i class="fas fa-magic icon-tertiary"></i>
+            <span class="value">{{ stats.favoriteGenre }}</span>
+            <span class="label">Género Principal</span>
+        </div>
+
+        <div class="metric-card card">
+            <i class="fas fa-file-alt icon-quaternary"></i>
+            <span class="value">{{ stats.avgPagesPerSession | number: '1.0-0' }}</span>
+            <span class="label">Páginas/Sesión</span>
+        </div>
+    </section>
+    
+    <section class="analysis-grid">
+        
+        <div class="chart-card card">
+            <h2>Páginas Leídas por Mes</h2>
+            <div class="chart-placeholder">        
+                Barra de progreso mensual (Simulación)
+            </div>
+        </div>
+        
+        <div class="history-card card">
+            <h2>Actividad Reciente</h2>
+            <ul class="history-list">
+                <li *ngFor="let item of stats.readingHistory | slice:0:5">
+                <span class="book-title">{{ item.bookTitle }}</span>
+                <span class="progress-info">{{ item.progress }}%</span>
+                <span class="date-info">{{ item.lastRead | date: 'shortDate' }}</span>
+                </li>
+                <li *ngIf="stats.readingHistory.length === 0" class="empty">No hay actividad reciente.</li>
+            </ul>
+        </div>
+    </section>
+
+</div>
+
+<div *ngIf="!(userStats$ | async)" class="loading-state">
+    <i class="fas fa-spinner fa-spin"></i> Cargando estadísticas...
+</div>
