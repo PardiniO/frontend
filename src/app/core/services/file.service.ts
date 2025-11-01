@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
-import { environment } from "../../environments/environment";
-import { IFileUploadResponse, IFileDeleteResponse } from '../interfaces/file';
+import { environment } from "../../../environments/environment";
+import { IFileUploadResponse, IFileDeleteResponse } from '../../interfaces/file';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class FileService {
 
   uploadFile(file: File): Observable<IFileUploadResponse> {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', file, file.name);
 
     return this.http.post<IFileUploadResponse>(`${this.apiUrl}/upload`, formData);
   }

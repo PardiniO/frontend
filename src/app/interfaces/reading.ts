@@ -1,5 +1,3 @@
-import { IBook } from "./book";
-
 export interface IReadingProgress {
     bookId: number;
     page: number;

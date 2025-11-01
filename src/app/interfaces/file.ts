@@ -1,4 +1,7 @@
 export interface IFileUploadResponse {
+    fileId: number;
+    title: string;
+    author?: string;
     fileUrl: string;
     fileName: string;
     fileType: string;

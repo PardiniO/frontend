@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { IBook } from "../../interfaces/book";
 import { IFolder } from "../../interfaces/folder";
 import { IReadingStatus } from "../../interfaces/reading";
-import { LibraryService } from "../../core/services/library";
+import { LibraryService } from "../../core/services/library.service";
 
 type BookStatus = IReadingStatus['status'] | 'all';
 

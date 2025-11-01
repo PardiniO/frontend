@@ -1,1 +1,52 @@
-<p>library works!</p>
+<div class="library-container">
+    <aside class="library-sidebar">
+        <h3>Mis Carpetas</h3>
+
+        <div class="status-filters">
+            <button
+                *ngFor="let filter of statusFilters"
+                [class.active]="activeFilter === filter.status"
+                (click)="loadBooksByStatus(filter.status)"
+            >{{ filter.label }}
+            </button>
+        </div>
+
+        <hr>
+
+        <ul class="folders-list">
+            <li *ngFor="let folder of folders$ | async">
+                <i class="fas fa-folder"></i>
+                {{ folder.name }} ({{ folder.bookId.length }})
+            </li>
+        </ul>
+
+        <button class="btn-create-folder" (click)="createNewFolder('Nueva Carpeta')">
+            <i class="fas fa-plus"></i> Crear carpeta
+        </button>
+    </aside>
+
+    <main class="library-content">
+        <h1>{{ statusFilters.find(filter => filter.status === activeFilter)?.label }}</h1>
+
+        <div class="book-grid">
+            <div class="book-card" *ngFor="let book of books$ | async" [routerLink]="['/read', book.id]">
+                <img [src]="book.coverUrl" alt="Portada de {{ book.title }}">
+                <div class="book-info">
+                    <h4>{{ book.title }}</h4>
+                    <p>{{ book.author }}</p>
+                    <div class="progress-bar-container">
+                        <div
+                            class="progress-bar"
+                            [style.width.%]="book.readingProgress?.progress || 0"
+                        ></div>
+                    </div>
+                    <span class="progress-text">{{ book.readingProgress?.progress || 0}}% leído</span>
+                </div>
+            </div>
+
+            <div *ngIf="!(books$ | async)?.length" class="empty-state">
+                <p>No tienes libros en esta categoría</p>
+            </div>
+        </div>
+    </main>
+</div>

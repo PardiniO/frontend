@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FileService } from "../../core/services/file.service";
 import { Router } from "@angular/router";
-import { IFileMetadata } from "../../interfaces/file";
+import { IFileUploadResponse } from "../../interfaces/file";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dropzone',
@@ -12,7 +13,7 @@ export class DropzoneComponent {
   isDragging: boolean = false;
   uploadStatus: string = '';
 
-  currentUploadSubscription: any;
+  private currentUploadSubscription: Subscription | undefined;
 
   constructor(
     private fileService: FileService,
@@ -48,18 +49,18 @@ export class DropzoneComponent {
     input.value = '';
   }
 
-  private handleFiles(files: IFiLe[]): void {
+  private handleFiles(files: File[]): void {
     const validFiles = files.filter(file => file.name.endsWith('.pdf') || file.name.endsWith('.epub'));
     if (validFiles.length === 0) {
       this.uploadStatus = 'Solo se permiten archivos PDF o EPUB.';
       return;
     }
 
-    const fileUpload: IFileMetadata = validFiles[0];
+    const fileUpload: File = validFiles[0];
     this.uploadStatus = `Cargando "${fileUpload.name}"...`;
 
-    this.fileService.uploadFile(fileUpload).subscribe({
-      next: (response: IFileMetadata) => {
+    this.currentUploadSubscription = this.fileService.uploadFile(fileUpload).subscribe({
+      next: (response: IFileUploadResponse) => {
         this.uploadStatus = `"${response.title}" cargando. Ir a Biblioteca.`;
         setTimeout(() => this.router.navigate(['/library']), 1500);
       },
@@ -68,5 +69,11 @@ export class DropzoneComponent {
         console.error('Error al cargar:', err);
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.currentUploadSubscription) {
+      this.currentUploadSubscription.unsubscribe();
+    }
   }
 }
