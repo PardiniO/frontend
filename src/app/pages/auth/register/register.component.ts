@@ -1,16 +1,28 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "../../../core/services/auth.service";
+import { take } from "rxjs/operators";
+
+export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const password = control.get('password');
+  const confirmPassword = control.get('passwordConfirm');
+
+  if (password && confirmPassword && password.value !== confirmPassword.value) {
+    return { passwordMismatch: true };
+  }
+  return null;
+};
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit{
     form!: FormGroup;
-    error!: '';
+    errorMessage: string = '';
+    isLoading: boolean = false;
   
   constructor(
     private formBuilder: FormBuilder,
@@ -20,24 +32,34 @@ export class RegisterComponent {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      username: ['', Validators.required],
+      username: ['', Validators.required, Validators.minLength(3)],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
+      password: ['', Validators.required, Validators.minLength(6)],
+      passwordConfirm: ['', [Validators.required]],
+    }, { validators: passwordMatchValidator });
   }
 
   onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    };
 
-    const credentials = this.form.value as { username: string; email: string; password: string };
+    this.isLoading = true;
+    this.errorMessage = '';
 
-    this.auth.login(credentials).subscribe({
-      next: (res) => {
+    const { username, email, password } = this.form.value;
+    const credentials = { username, email, password };
+
+    this.auth.login(credentials).pipe(take(1)).subscribe({
+      next: (res: { token: string }) => {
         this.auth.saveToken(res.token);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
+        this.isLoading = false;
       },
-      error: (err) => {
-        this.error = err.error?.message || 'Error al registrarse';
+      error: (err: unknown) => {
+        this.errorMessage = 'Error al registrarse: ', err;
+        this.isLoading = false;
       }
     });
   }
