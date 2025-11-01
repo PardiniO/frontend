@@ -1,0 +1,14 @@
+<div class="progress-bar-component">
+    <span class="book-title-small">{{ title }}</span>
+    
+    <div class="progress-details">
+        <div class="progress-visualization">
+            <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+        </div>
+        
+        <div class="progress-text-info">
+            <span class="percentage-text">{{ progressPercentage }}%</span>
+            <span class="page-count">Página {{ currentPage }} de {{ totalPages }}</span>
+        </div>  
+    </div>
+</div>

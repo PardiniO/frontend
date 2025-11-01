@@ -1,0 +1,68 @@
+@import 'frontend\src\styles.scss';
+
+.progress-bar-component {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    
+    // Ocultar el título en móvil para ganar espacio
+    @media (max-width: 600px) {
+        .book-title-small {
+            display: none;
+        }
+    }
+}
+
+.book-title-small {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: $color-text-dark;
+    max-width: 25%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.progress-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    max-width: 65%; /* Limita el ancho de la barra en desktop */
+    margin-left: 2rem;
+    
+    @media (max-width: 600px) {
+        max-width: 100%;
+        margin-left: 0;
+    }
+}
+
+.progress-visualization {
+    height: 8px;
+    width: 100%;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.25rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: $color-primary;
+    transition: width 0.5s ease;
+}
+
+.progress-text-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    
+    .percentage-text {
+        font-weight: 600;
+        color: $color-primary;
+    }
+    
+    .page-count {
+        color: $color-text-light;
+    }
+}

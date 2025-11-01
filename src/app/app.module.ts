@@ -24,6 +24,7 @@ import { HighlightToolbarComponent } from './components/highlight-toolbar/highli
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LastActiveBookComponent } from './components/last-active-book/last-active-book.component';
+import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { LastActiveBookComponent } from './components/last-active-book/last-acti
     HighlightToolbarComponent,
     DashboardComponent,
     LastActiveBookComponent,
+    ProgressBarComponent,
   ],
   imports: [
     BrowserModule,
