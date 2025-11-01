@@ -1,0 +1,26 @@
+<div *ngIf="lastBook; else noActiveBook" class="active-book-card">
+    <img class="book-cover" [src]="lastBook.coverUrl" alt="Portada de {{ lastBook.title }}">
+
+    <div class="book-details">
+        <h4 class="book-title">{{ lastBook.title }}</h4>
+        <p class="book-author">por {{ lastBook.author }}</p>
+
+        <div class="progress-container">
+            <div class="progress-bar" [style.width.%]="progressPercentage"></div>
+        </div>
+
+        <span class="progress-text">{{ progressPercentage }}% completado</span>
+
+        <button [routerLink]="readLink" class="btn-resume">
+            <i class="fas fa-play">Continuar Leyendo</i>
+        </button>
+    </div>
+</div>
+
+<ng-template #noActiveBook>
+    <div class="empty-state">
+        <i class="fas fa-search"></i>
+        <p>No has iniciado un libro recientemente</p>
+        <button [routerLink]="['/library']" class="btn-primary">Explorar Biblioteca</button>
+    </div>
+</ng-template>

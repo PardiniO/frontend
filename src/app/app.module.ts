@@ -23,6 +23,7 @@ import { NotePanelComponent } from './components/note-panel/note-panel.component
 import { HighlightToolbarComponent } from './components/highlight-toolbar/highlight-toolbar.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { LastActiveBookComponent } from './components/last-active-book/last-active-book.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     NotePanelComponent,
     HighlightToolbarComponent,
     DashboardComponent,
+    LastActiveBookComponent,
   ],
   imports: [
     BrowserModule,
