@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { environment } from "../../environments/environment";
-import { IHighlight } from "../interfaces/highlight";
+import { environment } from "../../../environments/environment";
+import { IHighlight } from "../../interfaces/highlight";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HighlightService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = `${environment.apiUrl}/books`;
 
   constructor(private http: HttpClient) { }
 
   getHighlights(bookId: number): Observable<IHighlight[]> {
-    return this.http.get<IHighlight[]>(`${this.apiUrl}/books/${bookId}/highlights`);
+    return this.http.get<IHighlight[]>(`${this.apiUrl}/${bookId}/highlights`);
   }
 
-  addHighlights(highlight: IHighlight) {
-    return this.http.post<IHighlight>(`${this.apiUrl}/books/${highlight.bookId}/highlights`, highlight);
+  addHighlights(highlight: IHighlight): Observable<IHighlight> {
+    return this.http.post<IHighlight>(`${this.apiUrl}/${highlight.bookId}/highlights`, highlight);
   }
 
-  updateHighlight(bookId: number, highlightId: number, payload: Partial<IHighlight>) {
-    return this.http.put(`${this.apiUrl}/books/${bookId}/highlights/${highlightId}`, payload);
+  updateHighlight(bookId: number, highlightId: number, payload: Partial<IHighlight>): Observable<IHighlight> {
+    return this.http.put<IHighlight>(`${this.apiUrl}/${bookId}/highlights/${highlightId}`, payload);
   }
 
-  deleteHighlights(bookId: number, highlightId: number) {
-    return this.http.delete(`${this.apiUrl}/books/${bookId}/highlights/${highlightId}`);
+  deleteHighlights(bookId: number, highlightId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${bookId}/highlights/${highlightId}`);
   }
 }

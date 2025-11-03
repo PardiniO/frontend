@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NoteService } from "../../core/services/note.service";
 import { INote } from "../../interfaces/note";
 
@@ -21,10 +21,10 @@ export class NotePanelComponent implements OnInit, OnChanges{
   get currentPage(): number {
     return this._currentPage;
   }
-
   @Input() bookId!: number;
+  @Input() notes: INote[] = [];
+  @Input() noteAdded = new EventEmitter<string>();
 
-  notes: INote[] = [];
   newNote: string = '';
 
   constructor(private noteService: NoteService) {}
@@ -49,7 +49,10 @@ export class NotePanelComponent implements OnInit, OnChanges{
   }
 
   addNote(): void {
-    if (!this.newNote.trim()) return;
+    if (this.newNote.trim() !== '') {
+      this.noteAdded.emit(this.newNote);
+      this.newNote = '';
+    };
 
     const note: INote = {
       id: undefined,

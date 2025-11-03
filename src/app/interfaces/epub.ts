@@ -1,7 +1,7 @@
 export interface IEpubContents {
     window: Window;
 }
-
+// cfi: Canonical Fragment Identifier (Identificador de Fragmento Canónico)
 export interface IEpubEventMap {
     selected: (cfiRange: string, contents: IEpubContents) => void;
 }

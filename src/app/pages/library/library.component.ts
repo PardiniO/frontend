@@ -17,6 +17,10 @@ export class LibraryComponent implements OnInit {
   folders$!: Observable<IFolder[]>;
 
   activeFilter: BookStatus = 'leyendo';
+  allBooks: IBook[] = [];
+  filteredBooks: IBook[] = [];
+  isModalOpen: boolean = false;
+  newFolder: string = '';
 
   statusFIlter: { status: BookStatus; label: string }[] = [
     { status: 'leyendo', label: 'Leyendo' },
@@ -41,7 +45,7 @@ export class LibraryComponent implements OnInit {
     }
   }
 
-  createNewCollection(name: string): void {
+  createNewFolder(name: string): void {
     if (name) {
       this.libraryService.createFolder(name).subscribe({
         next: (newFolder) => {
@@ -51,5 +55,35 @@ export class LibraryComponent implements OnInit {
         error: (err: unknown) => console.error('Error al crear carpeta:', err),
       });
     }
+
+    if (this.newFolder.trim() === '') return;
+
+    this.libraryService.createFolder(this.newFolder).subscribe(
+      (this.newFolder: IFolder) => {
+        this.folders.push(newFolder);
+        this.newFolder = '';
+        this.filterBooks(this.newFolder.id);
+        console.log('Carpeta creada:', this.newFolder);
+      },
+      error => console.error('Fallo al crear carpeta:', error);
+    );
+  }
+
+  filterBooks(filterValue: string | 'all' | 'reading'): void {
+    this.selectedFolderId = filterValue;
+
+    if (filterValue === 'all') {
+      this.filteredBooks = [...this.allBooks];
+    } else if (filterValue === 'reading') {
+      this.filteredBooks = this.allBooks.filter(book => (book.progress ?? 0) > 0 && (book.progress ?? 0) < 100);
+    } else {
+      this.filteredBooks = this.allBooks.filter(book => book.folderId === filterValue);
+    }
+  }
+
+  openCreateFolderModal(): void { this.isModalOpen = true }
+  closeCreateFolderModal(): void {
+    this.isModalOpen = false;
+    this.newFolder = '';
   }
 }

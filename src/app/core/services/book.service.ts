@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { environment } from "../../environments/environment";
-import { IBook } from "../interfaces/book";
+import { environment } from "../../../environments/environment";
+import { IBook } from "../../interfaces/book";
 import { FileService } from "./file.service";
 
 @Injectable({
