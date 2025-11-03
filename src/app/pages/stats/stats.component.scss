@@ -1,13 +1,4 @@
-v// src/app/pages/stats/stats.component.scss
-
-$color-primary: #5c67f2;
-$color-secondary: #00bcd4;
-$color-tertiary: #f94144;
-$color-quaternary: #f8961e;
-$color-background-soft: #f8f9fa;
-$color-paper: #ffffff;
-$color-text-dark: #2c3e50;
-$color-shadow-light: rgba(0, 0, 0, 0.08);
+@import 'frontend\src\styles.scss';
 
 h1 {
     font-size: 2.2rem;
@@ -30,8 +21,6 @@ h1 {
         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
     }
 }
-
-/* -------------------- 1. MÉTRICAS CLAVE GRID -------------------- */
 
 .metrics-grid {
     display: grid;
@@ -68,11 +57,9 @@ h1 {
     }
 }
 
-/* -------------------- 2. ANÁLISIS GRID -------------------- */
-
 .analysis-grid {
     display: grid;
-    grid-template-columns: 3fr 2fr; /* Gráfico más ancho que la lista */
+    grid-template-columns: 3fr 2fr;
     gap: 2rem;
     
     @media (max-width: 900px) {
@@ -88,7 +75,6 @@ h1 {
     }
 }
 
-/* --- Gráfico --- */
 .chart-card {
     .chart-placeholder {
         height: 250px;
@@ -101,7 +87,6 @@ h1 {
     }
 }
 
-/* --- Historial --- */
 .history-card {
     .history-list {
         list-style: none;

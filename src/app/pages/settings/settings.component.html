@@ -1,1 +1,79 @@
-<p>settings works!</p>
+<div class="settings-page" *ngIf="prefs">
+    
+    <h1>⚙️ Configuración de Usuario</h1>
+    
+    <form (ngSubmit)="savePreferences()" class="settings-form">
+        
+        <section class="settings-section">
+        <h2>Apariencia Global</h2>
+        
+        <div class="setting-group">
+            <label>Tema de la Interfaz:</label>
+            <div class="radio-options">
+            <label *ngFor="let theme of themeOptions">
+                <input type="radio" [(ngModel)]="prefs.theme" [value]="theme" name="themeRadio">
+                {{ theme | titlecase }}
+            </label>
+            </div>
+        </div>
+        
+        <div class="setting-group">
+            <label for="font-family">Fuente Base:</label>
+            <select id="font-family" [(ngModel)]="prefs.fontFamily" name="fontFamilySelect">
+            <option value="serif">Serif (Clásica)</option>
+            <option value="sans-serif">Sans-serif (Moderna)</option>
+            <option value="monospace">Monospace (Técnico)</option>
+            </select>
+        </div>
+        
+        </section>
+        
+        <section class="settings-section">
+        <h2>Experiencia de Lectura</h2>
+        
+        <div class="setting-group">
+            <label for="font-size">Tamaño de Fuente Base ({{ prefs.fontSizeBase }}px):</label>
+            <input type="range" id="font-size" [(ngModel)]="prefs.fontSizeBase" name="fontSizeBaseRange" min="14" max="24" step="1">
+        </div>
+        
+        <div class="setting-group">
+            <label>Comportamiento de Paginación:</label>
+            <div class="radio-options">
+            <label *ngFor="let layout of layoutOptions">
+                <input type="radio" [(ngModel)]="prefs.readerLayout" [value]="layout.value" name="layoutRadio">
+                {{ layout.label }}
+            </label>
+            </div>
+        </div>
+        
+        <div class="setting-group toggle-group">
+            <label for="progress-overlay">Mostrar Barra de Progreso en Pantalla:</label>
+            <input type="checkbox" id="progress-overlay" [(ngModel)]="prefs.showProgressOverlay" name="progressOverlayCheck">
+        </div>
+        </section>
+        
+        <section class="settings-section">
+        <h2>Gestión y Seguridad</h2>
+        
+        <button type="button" class="btn-secondary" [routerLink]="['/perfil']">
+            Editar Perfil / Contraseña
+        </button>
+        
+        <button type="button" class="btn-danger" (click)="logout()">
+            Cerrar Sesión
+        </button>
+        
+        <button type="button" class="btn-danger-outline" (click)="deleteAccount()">
+            Eliminar Cuenta
+        </button>
+        </section>
+        
+        <div class="save-actions">
+        <button type="submit" [disabled]="isSaving" class="btn-primary">
+            {{ isSaving ? 'Guardando...' : 'Guardar Cambios' }}
+        </button>
+        <span *ngIf="saveSuccess" class="success-message">¡Ajustes guardados!</span>
+        </div>
+        
+    </form>
+</div>
