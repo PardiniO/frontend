@@ -1,5 +1,5 @@
 import { Component, OnInit, untracked } from '@angular/core';
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { IBook } from "../../interfaces/book";
 import { IFolder } from "../../interfaces/folder";
 import { IReadingStatus } from "../../interfaces/reading";
