@@ -14,6 +14,6 @@ export class LastActiveBookComponent {
   }
 
   get progressPercentage(): number {
-    return this.lastBook?.progress || 0;
+    return this.lastBook?.progress ?? 0;
   }
 }

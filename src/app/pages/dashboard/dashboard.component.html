@@ -12,7 +12,7 @@
 
     <section class="activity-summary-card card">
         <h2 class="card-title">Continuar leyendo</h2>
-        <app-last-active-book></app-last-active-book>
+        <app-last-active-book [lastBook]="lastActiveBook$ | async"></app-last-active-book>
 
         <button class="btn-full-width btn-primary" [routerLink]="['/library']">
             Ver mi biblioteca

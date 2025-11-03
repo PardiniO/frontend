@@ -53,7 +53,7 @@
         <app-progress-bar
             [currentPage]="currentPage"
             [totalPages]="totalPages"
-            [title]="currentBook?.title"
+            [title]="currentBook?.title || Cargando..."
         ></app-progress-bar>
     </footer>
 </div>
