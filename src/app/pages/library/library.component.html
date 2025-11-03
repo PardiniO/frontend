@@ -4,9 +4,9 @@
 
         <div class="status-filters">
             <button
-                *ngFor="let filter of statusFilters"
+                 *ngFor="let filter of statusFilters"
                 [class.active]="activeFilter === filter.status"
-                (click)="loadBooksByStatus(filter.status)"
+                (click)="loadBooksByStatus(filter.status)" 
             >{{ filter.label }}
             </button>
         </div>
@@ -14,13 +14,17 @@
         <hr>
 
         <ul class="folders-list">
-            <li *ngFor="let folder of folders$ | async">
-                <i class="fas fa-folder"></i>
+            <li 
+                *ngFor="let folder of folders" 
+                (click)="filterBooks(folder.id)"
+                [class.active]="selectedFolderId === folder.id"
+            >
+            <i class="fas fa-folder"></i>
                 {{ folder.name }} ({{ folder.bookId.length }})
             </li>
         </ul>
 
-        <button class="btn-create-folder" (click)="createNewFolder('Nueva Carpeta')">
+        <button class="btn-create-folder" (click)="openCreateFolderModal()">
             <i class="fas fa-plus"></i> Crear carpeta
         </button>
     </aside>
@@ -29,7 +33,11 @@
         <h1>{{ statusFilters.find(filter => filter.status === activeFilter)?.label }}</h1>
 
         <div class="book-grid">
-            <div class="book-card" *ngFor="let book of books$ | async" [routerLink]="['/read', book.id]">
+            <div 
+                class="book-card" 
+                *ngFor="let book of books$ | async" 
+                [routerLink]="['/read', book.id]"
+            >
                 <img [src]="book.coverUrl" alt="Portada de {{ book.title }}">
                 <div class="book-info">
                     <h4>{{ book.title }}</h4>
@@ -37,10 +45,10 @@
                     <div class="progress-bar-container">
                         <div
                             class="progress-bar"
-                            [style.width.%]="book.readingProgress?.progress || 0"
+                            [style.width.%]="book.readingProgress?.progress ?? 0"
                         ></div>
                     </div>
-                    <span class="progress-text">{{ book.readingProgress?.progress || 0}}% leído</span>
+                    <span class="progress-text">{{ book.readingProgress?.progress ?? 0}}% leído</span>
                 </div>
             </div>
 
@@ -49,4 +57,19 @@
             </div>
         </div>
     </main>
+    
+    <div class="modal-overlay" *ngIf="isModalOpen">
+        <div class="modal-content">
+            <h2>Crear Nueva Carpeta</h2>
+            <input type="text" [(ngModel)]="newFolderName" placeholder="Nombre de la carpeta">
+            <div class="modal-actions">
+                <button class="btn-secondary" (click)="closeCreateFolderModal()">Cancelar</button>
+                <button 
+                    class="btn-primary" 
+                    (click)="createNewFolder()" 
+                    [disabled]="!newFolderName.trim()"
+                >Crear</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, untracked } from '@angular/core';
 import { Observable } from "rxjs";
 import { IBook } from "../../interfaces/book";
 import { IFolder } from "../../interfaces/folder";
@@ -20,9 +20,11 @@ export class LibraryComponent implements OnInit {
   allBooks: IBook[] = [];
   filteredBooks: IBook[] = [];
   isModalOpen: boolean = false;
-  newFolder: string = '';
+  folders: IFolder[] = [];
+  selectedFolderId: number | 'all' | 'reading' = 'all';
+  newFolderName: string = '';
 
-  statusFIlter: { status: BookStatus; label: string }[] = [
+  statusFIlters: { status: BookStatus; label: string }[] = [
     { status: 'leyendo', label: 'Leyendo' },
     { status: 'para-leer', label: 'Para Leer' },
     { status: 'leido', label: 'Leído' },
@@ -32,58 +34,66 @@ export class LibraryComponent implements OnInit {
   constructor(private libraryService: LibraryService) {}
 
   ngOnInit(): void {
-    this.loadBooksByStatus(this.activeFilter);
-    this.folders$ = this.libraryService.getUserFolders();
+    this.loadAllData();
+  }
+
+  private loadAllData(): void {
+    this.libraryService.getAllUserBooks().subscribe({
+      next: (books: IBook[]) => {
+        this.allBooks = books;
+        this.filterBooks('leyendo');
+      },
+      error: (err: unknown) => console.error('Error cargando todos los libros:', err)
+    });
   }
 
   loadBooksByStatus(status: BookStatus): void {
     this.activeFilter = status;
-    if (status === 'all') {
-      this.books$ = this.libraryService.getAllUserBooks();
-    } else {
-      this.books$ = this.libraryService.getBooksByStatus(status);
-    }
+    this.filterBooks(status);
   }
 
   createNewFolder(name: string): void {
-    if (name) {
-      this.libraryService.createFolder(name).subscribe({
-        next: (newFolder) => {
+    if (this.newFolderName.trim() === '') return;
+
+    const folderName = this.newFolderName.trim();
+
+    this.libraryService.createFolder(folderName).subscribe({
+        next: (newFolder: IFolder) => {
           console.log(`Colección creada: ${newFolder.name}`);
-          this.folders$ = this.libraryService.getUserFolders();
+          this.folders.push(newFolder);
+          this.newFolderName = '';
+          this.closeCreateFolderModal();
+          this.filterBooks(newFolder.id);
         },
         error: (err: unknown) => console.error('Error al crear carpeta:', err),
       });
     }
 
-    if (this.newFolder.trim() === '') return;
-
-    this.libraryService.createFolder(this.newFolder).subscribe(
-      (this.newFolder: IFolder) => {
-        this.folders.push(newFolder);
-        this.newFolder = '';
-        this.filterBooks(this.newFolder.id);
-        console.log('Carpeta creada:', this.newFolder);
-      },
-      error => console.error('Fallo al crear carpeta:', error);
-    );
-  }
-
-  filterBooks(filterValue: string | 'all' | 'reading'): void {
-    this.selectedFolderId = filterValue;
+  filterBooks(filterValue: BookStatus | number): void {
+    this.activeFilter = (typeof filterValue === 'string') ? filterValue : 'all';
 
     if (filterValue === 'all') {
       this.filteredBooks = [...this.allBooks];
-    } else if (filterValue === 'reading') {
+    } else if (filterValue === 'leyendo') {
       this.filteredBooks = this.allBooks.filter(book => (book.progress ?? 0) > 0 && (book.progress ?? 0) < 100);
-    } else {
-      this.filteredBooks = this.allBooks.filter(book => book.folderId === filterValue);
+    } else if (filterValue === 'leido' || filterValue === 'para-leer') {
+      this.filteredBooks = this.allBooks.filter(book => book.status === filterValue);
+    } else if (typeof filterValue === 'number') {
+      const selectedFolder = this.folders.find(file => file.id === filterValue);
+
+      if (selectedFolder) {
+        this.filteredBooks = this.allBooks.filter(book => selectedFolder.bookId.includes(book.id));
+      } else {
+        this.filteredBooks = [];
+      }
     }
+
+    this.books$ = of(this.filteredBooks);
   }
 
   openCreateFolderModal(): void { this.isModalOpen = true }
   closeCreateFolderModal(): void {
     this.isModalOpen = false;
-    this.newFolder = '';
+    this.newFolderName = '';
   }
 }
