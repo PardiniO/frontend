@@ -3,12 +3,13 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { IUserPreferences } from "../../interfaces/user";
+import { IEnvironments } from '../../../environments/environments.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
-  private apiUrl = `${environment.apiUrl}/settings`;
+  private apiUrl = (environment as IEnvironments).apiUrl;
 
   private defaultPrefs: IUserPreferences = {
     theme: 'light',
@@ -21,7 +22,7 @@ export class SettingsService {
   constructor(private http: HttpClient) { }
 
   loadPreferences(): Observable<IUserPreferences> {
-    const url = `${this.apiUrl}/preferences`;
+    const url = `${this.apiUrl}/settings/preferences`;
 
     return new Observable<IUserPreferences>(observer => {
       this.http.get<IUserPreferences>(url).subscribe({
@@ -39,7 +40,7 @@ export class SettingsService {
   }
 
   updatePreferences(prefs: IUserPreferences): Observable<IUserPreferences> {
-    const url = `${this.apiUrl}/user/preferences`;
+    const url = `${this.apiUrl}/settings/user/preferences`;
     return this.http.put<IUserPreferences>(url, prefs);
   }
 }

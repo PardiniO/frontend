@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { SharedModule } from './components/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgxExtendedPdfViewerModule
+    NgxExtendedPdfViewerModule,
+    SharedModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS,

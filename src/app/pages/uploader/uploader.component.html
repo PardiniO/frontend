@@ -25,7 +25,7 @@
             <h2>Archivos en Cola ({{ filesToUpload.length }})</h2>
             
             <div *ngIf="filesToUpload.length > 0; else emptyQueue">
-                <button class="btn-upload-all" (click)="uploadAllPending()" [disabled]="filesToUpload.every(f => f.status !== 'pending')">
+                <button class="btn-upload-all" (click)="uploadAllPending()" [disabled]="filesToUpload.every(file => file.status !== 'pending') || false">
                     <i class="fas fa-cloud-upload-alt"></i> Subir todos los Pendientes
                 </button>
                 

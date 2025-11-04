@@ -12,7 +12,7 @@
 
         <div class="metric-card card">
             <i class="fas fa-clock icon-secondary"></i>
-            <span class="value">{{ stats.totalHoursSpent | number: '1.0-1' }}h</span>
+            <span class="value">{{ stats.totalHoursSpend | number: '1.0-1' }}h</span>
             <span class="label">Tiempo Total</span>
         </div>
 
@@ -53,6 +53,6 @@
 
 </div>
 
-<div *ngIf="!(userStats$ | async)" class="loading-state">
+<div *ngIf="!(userStats)" class="loading-state">
     <i class="fas fa-spinner fa-spin"></i> Cargando estadísticas...
 </div>

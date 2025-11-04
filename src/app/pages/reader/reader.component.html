@@ -4,7 +4,7 @@
             <button class="btn-left" (click)="goBack()">
                 <i class="fas fa-arrow-left"></i>
             </button>
-            <span class="book-title">{{ currentBook?.title }}</span>
+            <span class="book-title">{{ currentBook.title }}</span>
         </div>
         <div class="toolbar-right">
             <button class="btn-icon" [class.active]="showHighlights" (click)="toggleHighlights()">
@@ -26,8 +26,8 @@
                 [showBorders]="false"
                 [height]="'100%'"
                 [showToolbar]="false" [showFindButton]="true"
-                (pagesLoaded)="onPdfLoaded($event)"
-                (pageChange)="onPageChange($event)"
+                (pagesLoaded)="onPdfLoaded(event)"
+                (pageChange)="onPageChange(newPage)"
             ></ng-extended-pdf-viewer>
         </ng-container>
 
@@ -44,7 +44,7 @@
 
         <aside class="sidebar-panel highligh-panel" [class.is-open]="showHighlights">
             <app-highlight-toolbar
-                (highlight)="onHighligh($event)"
+                (highlight)="onHighlight($event)"
             ></app-highlight-toolbar>
         </aside>
     </main>
@@ -53,7 +53,7 @@
         <app-progress-bar
             [currentPage]="currentPage"
             [totalPages]="totalPages"
-            [title]="currentBook?.title || Cargando..."
+            [title]="currentBook.title || 'Cargando...'"
         ></app-progress-bar>
     </footer>
 </div>

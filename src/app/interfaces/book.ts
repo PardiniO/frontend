@@ -5,8 +5,10 @@ export interface IBook {
     format: 'pdf' | 'epub';
     fileUrl: string;
     currentPage?: number;
-    progress?: number;
-    status?: 'leyendo' | 'leido' | 'para-leer';
     createdAt?: string;
     updatedAt?: string;
+    coverUrl?: string;
+    readingProgress?: { progress: number };
+    status?: 'leyendo' | 'leido' | 'para-leer';
+    progress?: number;
 }

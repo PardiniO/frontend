@@ -5,6 +5,7 @@ import { IReadingStatus } from "../../interfaces/reading";
 import { IFolder } from "../../interfaces/folder";
 import { IBook } from "../../interfaces/book";
 import { environment } from '../../../environments/environment';
+import { IEnvironments } from '../../../environments/environments.interface';
 
 type filterStatus = IReadingStatus['status'];
 
@@ -12,29 +13,29 @@ type filterStatus = IReadingStatus['status'];
   providedIn: 'root'
 })
 export class LibraryService {
-  private apiUrl = `${environment.apiUrl}/library`;
+  private apiUrl = (environment as IEnvironments).apiUrl;
 
   constructor(private http: HttpClient) {}
 
   getAllUserBooks(): Observable<IBook[]> {
-    return this.http.get<IBook[]>(`${this.apiUrl}/books`);
+    return this.http.get<IBook[]>(`${this.apiUrl}/library/books`);
   }
 
   getBooksByStatus(status: filterStatus): Observable<IBook[]> {
-    return this.http.get<IBook[]>(`${this.apiUrl}/books?status=${status}`);
+    return this.http.get<IBook[]>(`${this.apiUrl}/library/books?status=${status}`);
   }
 
   getUserFolders(): Observable<IFolder[]> {
-    return this.http.get<IFolder[]>(`${this.apiUrl}/folders`);
+    return this.http.get<IFolder[]>(`${this.apiUrl}/library/folders`);
   }
 
   createFolder(name: string): Observable<IFolder> {
     const body = { name };
-    return this.http.post<IFolder>(`${this.apiUrl}/folders`, body);
+    return this.http.post<IFolder>(`${this.apiUrl}/library/folders`, body);
   }
 
   addBookToFolder(folderId: number, bookId: number): Observable<IFolder> {
     const body = { bookId };
-    return this.http.patch<IFolder>(`${this.apiUrl}/folders/${folderId}/add`, body);
+    return this.http.patch<IFolder>(`${this.apiUrl}/library/folders/${folderId}/add`, body);
   }
 }

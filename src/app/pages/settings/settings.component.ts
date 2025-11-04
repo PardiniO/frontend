@@ -47,6 +47,14 @@ export class SettingsComponent {
     });
   }
 
+  savePreferences(): void {
+
+  }
+
+  deleteAccount(): void {
+    
+  }
+
   private applyTheme(theme: 'light' | 'dark' | 'system'): void {
     const body = document.body;
     body.classList.remove('theme-light', 'theme-dark');

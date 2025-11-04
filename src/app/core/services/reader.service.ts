@@ -5,6 +5,7 @@ import { environment } from "../../../environments/environment";
 import { IBook } from "../../interfaces/book";
 import { IReadingHistory, IReadingProgress, IReadingStatus } from '../../interfaces/reading';
 import { IUserStats } from '../../interfaces/user';
+import { IEnvironments } from '../../../environments/environments.interface';
 
 type BookStatus = IReadingStatus['status'];
 
@@ -12,7 +13,7 @@ type BookStatus = IReadingStatus['status'];
   providedIn: 'root'
 })
 export class ReaderService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = (environment as IEnvironments).apiUrl;
 
   constructor(private http: HttpClient) { }
 

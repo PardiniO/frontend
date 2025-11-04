@@ -24,7 +24,7 @@ export class LibraryComponent implements OnInit {
   selectedFolderId: number | 'all' | 'reading' = 'all';
   newFolderName: string = '';
 
-  statusFIlters: { status: BookStatus; label: string }[] = [
+  statusFilters: { status: BookStatus; label: string }[] = [
     { status: 'leyendo', label: 'Leyendo' },
     { status: 'para-leer', label: 'Para Leer' },
     { status: 'leido', label: 'Leído' },

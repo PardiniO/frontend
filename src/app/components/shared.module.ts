@@ -8,6 +8,8 @@ import { HighlightToolbarComponent } from "./highlight-toolbar/highlight-toolbar
 import { NavbarComponent } from "./navbar/navbar.component";
 import { NotePanelComponent } from "./note-panel/note-panel.component";
 import { ProgressBarComponent } from "./progress-bar/progress-bar.component";
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,11 +19,13 @@ import { ProgressBarComponent } from "./progress-bar/progress-bar.component";
     HighlightToolbarComponent,
     NavbarComponent,
     NotePanelComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    SidebarComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   exports: [
     DropzoneComponent,
@@ -31,7 +35,8 @@ import { ProgressBarComponent } from "./progress-bar/progress-bar.component";
     NotePanelComponent,
     ProgressBarComponent,
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ]
 })
 export class SharedModule { }

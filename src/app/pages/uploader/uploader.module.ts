@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UploaderComponent } from "./uploader.component";
 import { UploaderRoutingModule } from './uploader-routing.module';
 import { SharedModule } from '../../components/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { SharedModule } from '../../components/shared.module';
   imports: [
     CommonModule,
     UploaderRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class UploaderModule { }
