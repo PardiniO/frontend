@@ -8,10 +8,45 @@ import { ReaderComponent } from "./pages/reader/reader.component";
 import { AuthGuard } from "./core/guards/auth.guard";
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  {
+    path: '',
+    component: HomeComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/dashboard/dashboard.module').then(module => module.DashboardModule),
+      },
+      {
+        path: 'biblioteca',
+        loadChildren: () => import('./pages/library').then(module => module.LibraryModule),
+      },
+      {
+        path: 'cargar',
+        loadChildren: () => import('./pages/uploader').then(module => module),
+      },
+      {
+        path: 'ajustes',
+        loadChildren: () => import('./pages/settings').then(module => module),
+      },
+      {
+        path: 'estadisticas',
+        loadChildren: () => import('./pages/settings').then(module => module),
+      },
+    ],
+  },
+  {
+    path: 'read/:id',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/reader').then(module => module),
+  },
+  { 
+    path: 'login', 
+    component: LoginComponent,
+    loadChildren: () => import('./pages/auth/').then(module => module),
+  },
   { path: 'register', component: RegisterComponent },
   
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({
