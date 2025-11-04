@@ -18,31 +18,31 @@ const routes: Routes = [
       },
       {
         path: 'biblioteca',
-        loadChildren: () => import('./pages/library').then(module => module.LibraryModule),
+        loadChildren: () => import('./pages/library/library.module').then(module => module.LibraryModule),
       },
       {
         path: 'cargar',
-        loadChildren: () => import('./pages/uploader').then(module => module),
+        loadChildren: () => import('./pages/uploader/uploader.module').then(module => module.UploaderModule),
       },
       {
         path: 'ajustes',
-        loadChildren: () => import('./pages/settings').then(module => module),
+        loadChildren: () => import('./pages/settings/settings.module').then(module => module.SettingsModule),
       },
       {
         path: 'estadisticas',
-        loadChildren: () => import('./pages/settings').then(module => module),
+        loadChildren: () => import('./pages/stats/stats.module').then(module => module.StatsModule),
       },
     ],
   },
   {
     path: 'read/:id',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/reader').then(module => module),
+    loadChildren: () => import('./pages/reader/reader.module').then(module => module.ReaderModule),
   },
   { 
     path: 'login', 
     component: LoginComponent,
-    loadChildren: () => import('./pages/auth/').then(module => module),
+    loadChildren: () => import('./pages/auth/auth.module').then(module => module.AuthModule),
   },
   { path: 'register', component: RegisterComponent },
   
