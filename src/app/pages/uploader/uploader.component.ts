@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subscription } from "rxjs";
 import { FileService } from "../../core/services/file.service";
 import { IUploadState } from "../../interfaces/upload-state";

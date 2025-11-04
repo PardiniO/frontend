@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from "@angular/router";
-import { Observable, tap } from "rxjs";
 import { SettingsService } from "../../core/services/settings.service";
 import { IUserPreferences } from "../../interfaces/user";
 

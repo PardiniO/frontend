@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, map, of } from "rxjs";
 import { ReaderService } from "../../core/services/reader.service";
 import { IUserStats } from "../../interfaces/user";
 
@@ -9,8 +8,7 @@ import { IUserStats } from "../../interfaces/user";
   styleUrl: './stats.component.scss'
 })
 export class StatsComponent implements OnInit{
-  userStats$!: Observable<IUserStats>;
-
+  userStats: IUserStats | undefined;
   pagesReadDate: { month: string, pages: number }[] = [];
 
   constructor(private readerService: ReaderService) {}
@@ -19,21 +17,25 @@ export class StatsComponent implements OnInit{
     this.loadUserStats();
   }
 
-  private loadUserStats(): void {
-    this.userStats$ = this.readerService.getReadingHistory().pipe(
-      map((stats: IUserStats) => stats),
-      catchError(err => {
-        console.error('Error cargando estadísticas:', err);
+  private defaultStats: IUserStats = {
+    totalBooksRead: 0,
+    totalHoursSpend: 0,
+    favoriteGenre: 'N/A',
+    avgPagesPerSession: 0,
+    readingHistory: [],
+    pagesReadByMonth: []
+  };
 
-        return of ({
-          totalBooksRead: 0,
-          totalHoursSpend: 0,
-          favoriteGenre: 'N/A',
-          avgPagesPerSession: 0,
-          readingHistory: [],
-          pagesReadByMonth: []
-        } as IUserStats);
-      })
-    );
+  private loadUserStats(): void {
+    this.readerService.getStats().subscribe({
+      next: (stats: IUserStats) => {
+        this.userStats = stats,
+        this.pagesReadDate = stats.pagesReadByMonth
+      },
+      error: (err: unknown) => {
+        this.userStats = this.defaultStats,
+        console.error('Error al cargar estadísticas', err)
+      }
+    });
   }
 }

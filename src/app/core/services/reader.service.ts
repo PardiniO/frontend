@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { environment } from "../../../environments/environment";
 import { IBook } from "../../interfaces/book";
 import { IReadingHistory, IReadingProgress, IReadingStatus } from '../../interfaces/reading';
+import { IUserStats } from '../../interfaces/user';
 
 type BookStatus = IReadingStatus['status'];
 
@@ -31,5 +32,9 @@ export class ReaderService {
 
   getLastActiveBook(): Observable<IBook> {
     return this.http.get<IBook>(`${this.apiUrl}/books/last-active`);
+  }
+
+  getStats(): Observable<IUserStats> {
+    return this.http.get<IUserStats>(`${this.apiUrl}/user/stats`);
   }
 }
