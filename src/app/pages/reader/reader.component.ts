@@ -70,7 +70,7 @@ export class ReaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onPageChange(newPage: number): void {
     this.currentPage = newPage;
-    this.filterNotesByPage(newPage);
+    this.filterNotesByPage(this.currentPage);
   }
 
   private loadBook(bookId: number): void {
@@ -250,7 +250,7 @@ export class ReaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.highlightService.deleteHighlights(this.currentBook.id, highlight.id).subscribe({
       next: () => {
-        this.allHighlights = this.allHighlights.filter((highlight: IHighlight) => highlight.id !== highlight.id);
+        this.allHighlights = this.allHighlights.filter((index: IHighlight) => index.id !== highlight.id);
         if (highlight.type === 'epub' && this.rendition && highlight.cfi) {
           this.rendition.annotations.remove(highlight.cfi);
         } else if (highlight.type === 'pdf') {

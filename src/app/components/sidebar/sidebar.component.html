@@ -1,5 +1,10 @@
-<ul class="sidebar">
-    <li routerLink="/library" routerLinkActive="active">Biblioteca</li>
-    <li routerLink="/folders" routerLinkActive="active">Carpetas</li>
-    <li routerLink="/settings" routerLinkActive="active">Configuración</li>
+<ul class="sidebar-menu">
+    <li 
+        *ngIf="let item of navItems"
+        [routerLink]="item.route" 
+        routerLinkActive="active"
+        class="menu-item">
+    </li>
+    <li [class]="item.icon">Carpetas</li>
+    <span>{{ item.label }}</span>
 </ul>

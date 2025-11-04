@@ -2,13 +2,13 @@
 
 h1 {
     font-size: 2.2rem;
-    color: $color-text-dark;
+    color: $text-dark-color;
     margin-bottom: 2rem;
     font-weight: 700;
 }
 
 .card {
-    background: $color-paper;
+    background: $paper-color;
     padding: 1.5rem;
     border-radius: 12px;
     box-shadow: 0 4px 10px $color-shadow-light;
@@ -40,19 +40,19 @@ h1 {
         font-size: 2.5rem;
         margin-bottom: 0.75rem;
     }
-    .icon-primary { color: $color-primary; }
-    .icon-secondary { color: $color-secondary; }
-    .icon-tertiary { color: $color-tertiary; }
-    .icon-quaternary { color: $color-quaternary; }
+    .icon-primary { color: $primary-color; }
+    .icon-secondary { color: $secondary-color; }
+    .icon-tertiary { color: $tertiary-color; }
+    .icon-quaternary { color: $quaternary-color; }
 
     .value {
         font-size: 2rem;
         font-weight: 800;
-        color: $color-text-dark;
+        color: $text-dark-color
     }
     .label {
         font-size: 0.95rem;
-        color: #7f8c8d;
+        color: $text-gray-color;
         font-weight: 500;
     }
 }
@@ -68,7 +68,7 @@ h1 {
 
     h2 {
         font-size: 1.4rem;
-        color: $color-text-dark;
+        color: $text-dark-color;
         margin-bottom: 1.5rem;
         padding-bottom: 5px;
         border-bottom: 2px solid #f0f0f0;
@@ -102,14 +102,14 @@ h1 {
 
             .book-title {
                 font-weight: 600;
-                color: $color-text-dark;
+                color: $text-dark-color;
                 flex-basis: 50%;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
             .progress-info {
-                color: $color-secondary;
+                color: $secondary-color;
                 font-weight: 700;
             }
             .date-info {

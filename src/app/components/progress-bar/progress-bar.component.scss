@@ -6,7 +6,6 @@
     justify-content: space-between;
     width: 100%;
     
-    // Ocultar el título en móvil para ganar espacio
     @media (max-width: 600px) {
         .book-title-small {
             display: none;
@@ -17,7 +16,7 @@
 .book-title-small {
     font-size: 0.9rem;
     font-weight: 500;
-    color: $color-text-dark;
+    color: $text-dark-color;
     max-width: 25%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -28,7 +27,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    max-width: 65%; /* Limita el ancho de la barra en desktop */
+    max-width: 65%;
     margin-left: 2rem;
     
     @media (max-width: 600px) {
@@ -48,7 +47,7 @@
 
 .progress-fill {
     height: 100%;
-    background-color: $color-primary;
+    background-color: $primary-color;
     transition: width 0.5s ease;
 }
 
@@ -59,10 +58,10 @@
     
     .percentage-text {
         font-weight: 600;
-        color: $color-primary;
+        color: $primary-color;
     }
     
     .page-count {
-        color: $color-text-light;
+        color: $text-light-color;
     }
 }

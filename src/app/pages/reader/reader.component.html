@@ -22,12 +22,12 @@
                 [src]="currentBook.fileUrl"
                 [page]="currentPage"
                 [minifiedJSLibraries]="false"
-                [use-sidebar]="false"
+                [useSidebar]="false"
                 [showBorders]="false"
                 [height]="'100%'"
                 [showToolbar]="false" [showFindButton]="true"
-                (pagesLoaded)="onPdfLoaded(event)"
-                (pageChange)="onPageChange(newPage)"
+                (pagesLoaded)="onPdfLoaded($event)"
+                (pageChange)="onPageChange($event)"
             ></ng-extended-pdf-viewer>
         </ng-container>
 

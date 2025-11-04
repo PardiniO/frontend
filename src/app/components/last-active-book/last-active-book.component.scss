@@ -22,22 +22,20 @@
 .book-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: $color-text-dark;
+    color: $text-dark-color;
     margin-bottom: 0.25rem;
 }
 
 .book-author {
     font-size: 0.9rem;
-    color: $color-text-gray;
+    color: $text-gray-color;
     margin-bottom: 0.75rem;
 }
-
-/* --- Progreso --- */
 
 .progress-container {
     height: 6px;
     width: 100%;
-    background-color: $color-progress-bg;
+    background-color: $progress-bg-color;
     border-radius: 3px;
     overflow: hidden;
     margin-bottom: 0.25rem;
@@ -45,20 +43,20 @@
 
 .progress-bar {
     height: 100%;
-    background-color: $color-progress-fill;
+    background-color: $progress-fill-color;
     transition: width 0.5s ease;
 }
 
 .progress-text {
     display: block;
     font-size: 0.85rem;
-    color: $color-progress-fill;
+    color: $progress-fill-color;
     font-weight: 600;
     margin-bottom: 1rem;
 }
 
 .btn-resume {
-    background-color: $color-primary;
+    background-color: $primary-color;
     color: white;
     padding: 0.5rem 1rem;
     border: none;
@@ -78,11 +76,11 @@
     
     i {
         font-size: 2rem;
-        color: $color-text-gray;
+        color: $text-gray-color;
         margin-bottom: 1rem;
     }
     p {
-        color: $color-text-gray;
+        color: $text-gray-color;
         margin-bottom: 1rem;
     }
 }

@@ -1,10 +1,5 @@
 @import '../../../styles.scss';
 
-$color-primary: #5c67f2;
-$color-text-dark: #2c3e50;
-$color-border: #e0e0e0;
-$color-danger: #e74c3c;
-
 .settings-page {
     max-width: 800px;
     margin: 0 auto;
@@ -15,7 +10,7 @@ $color-danger: #e74c3c;
 
     h1 {
         font-size: 2.2rem;
-        color: $color-primary;
+        color: $primary-color;
         margin-bottom: 2rem;
         border-bottom: 2px solid #f0f0f0;
         padding-bottom: 0.5rem;
@@ -24,11 +19,11 @@ $color-danger: #e74c3c;
 
 .settings-section {
     padding: 1.5rem 0;
-    border-bottom: 1px solid $color-border;
+    border-bottom: 1px solid $border-color;
 
     h2 {
         font-size: 1.5rem;
-        color: $color-text-dark;
+        color: $text-dark-color;
         margin-bottom: 1.5rem;
     }
 }
@@ -45,7 +40,7 @@ $color-danger: #e74c3c;
     padding: 0.75rem 0;
     
     label {
-        color: $color-text-dark;
+        color: $text-dark-color;
         font-weight: 500;
         flex-basis: 50%;
     }
@@ -94,32 +89,32 @@ button {
 }
 
 .btn-primary {
-    background-color: $color-primary;
+    background-color: $primary-color;
     color: white;
     border: none;
-    &:hover:not(:disabled) { background-color: darken($color-primary, 8%); }
+    &:hover:not(:disabled) { background-color: darken($primary-color, 8%); }
     &:disabled { background-color: #aaa; cursor: not-allowed; }
 }
 
 .btn-secondary {
     background-color: #f0f0f0;
-    color: $color-primary;
-    border: 1px solid $color-primary;
+    color: $primary-color;
+    border: 1px solid $primary-color;
     &:hover { background-color: #e0e0e0; }
 }
 
 .btn-danger {
-    background-color: $color-danger;
+    background-color: $delete-color;
     color: white;
     border: none;
-    &:hover { background-color: darken($color-danger, 8%); }
+    &:hover { background-color: darken($delete-color, 8%); }
 }
 
 .btn-danger-outline {
     background: none;
-    color: $color-danger;
-    border: 1px solid $color-danger;
-    &:hover { background-color: rgba($color-danger, 0.1); }
+    color: $delete-color;
+    border: 1px solid $delete-color;
+    &:hover { background-color: rgba($delete-color, 0.1); }
 }
 
 .save-actions {
