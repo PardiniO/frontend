@@ -7,8 +7,8 @@ import { INote } from "../../interfaces/note";
   templateUrl: './note-panel.component.html',
   styleUrl: './note-panel.component.scss'
 })
-export class NotePanelComponent implements OnInit, OnChanges{
-  private _currentPage!: number;
+export class NotePanelComponent /*implements OnInit, OnChanges*/{
+/*  private _currentPage!: number;
   @Input()
   set currentPage(page: number) {
     if (page !== this._currentPage) {
@@ -79,4 +79,5 @@ export class NotePanelComponent implements OnInit, OnChanges{
       error: (err: unknown) => console.error('Error al borrar nota:', err)
     });
   }
+*/
 }

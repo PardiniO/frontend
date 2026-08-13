@@ -7,12 +7,12 @@ import { take } from "rxjs/operators";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit{
-    form!: FormGroup;
-    errorMessage: string = '';
-    isLoading: boolean = false;
+  formLogin!: FormGroup;
+  errorMessage: string = '';
+  isLoading: boolean = false;
   
   constructor(
     private formBuilder: FormBuilder,
@@ -21,22 +21,25 @@ export class LoginComponent implements OnInit{
   ) {}
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
+    this.formLogin = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
 
   onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+    if (this.formLogin.valid) {
+      console.log('Formulario enviado:', this.formLogin.value);
+    };
+    if (this.formLogin.invalid) {
+      this.formLogin.markAllAsTouched();
       return;
     };
 
     this.isLoading = true;
     this.errorMessage = '';
 
-    const credentials: { email: string; password: string } = this.form.value;
+    const credentials: { email: string; password: string } = this.formLogin.value;
 
     this.auth.login(credentials).pipe(take(1)).subscribe({
       next: (res: { token: string }) => {

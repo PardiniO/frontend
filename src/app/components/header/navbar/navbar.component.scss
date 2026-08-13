@@ -1,0 +1,27 @@
+header {
+    display: flex;
+    flex-direction: row;
+    color: rgb(3, 92, 70);
+
+    .navbar {
+        display: flex;
+        align-items: center;
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 1rem;
+        }
+
+        li {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    }
+}

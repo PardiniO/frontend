@@ -9,7 +9,7 @@
 .home-layout {
     display: flex;
     height: calc(100vh - #{$home-nav-height});
-    background-color: $sencond-background-color;
+    background-color: $second-background-color;
 
     app-sidebar {
         width: $sidebar-width;

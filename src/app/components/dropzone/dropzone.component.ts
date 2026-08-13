@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './dropzone.component.scss'
 })
 export class DropzoneComponent {
+/*
   isDragging: boolean = false;
   uploadStatus: string = '';
 
@@ -76,4 +77,5 @@ export class DropzoneComponent {
       this.currentUploadSubscription.unsubscribe();
     }
   }
+  */
 }

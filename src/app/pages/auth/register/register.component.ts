@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, Valid
 import { Router } from "@angular/router";
 import { AuthService } from "../../../core/services/auth.service";
 import { take } from "rxjs/operators";
+import { group } from '@angular/animations';
 
+/*
 export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
   const password = control.get('password');
   const confirmPassword = control.get('passwordConfirm');
@@ -13,42 +15,54 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): V
   }
   return null;
 };
+*/
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit{
-    form!: FormGroup;
-    errorMessage: string = '';
-    isLoading: boolean = false;
+export class RegisterComponent /*implements OnInit*/ {
+  formRegister!: FormGroup;
+  errorMessage: string = '';
+  isLoading: boolean = false;
   
   constructor(
     private formBuilder: FormBuilder,
     private auth: AuthService,
     private router: Router
   ) {}
-
+  
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      username: ['', Validators.required, Validators.minLength(3)],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required, Validators.minLength(6)],
-      passwordConfirm: ['', [Validators.required]],
-    }, { validators: passwordMatchValidator });
-  }
+    const passwordMatchValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+      const password = group.get('password')?.value;
+      const confirm = group.get('passwordConfirm')?.value;
 
+      return password === confirm ? null : { passwordMatchValidator: true };
+    }
+  
+    this.formRegister = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      passwordConfirm: ['', [Validators.required]],
+    }, {
+      validators: [passwordMatchValidator]
+    });
+  }
   onSubmit() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+    if (this.formRegister.valid) {
+      console.log(this.formRegister.value);
+    }
+    if (this.formRegister.invalid) {
+      this.formRegister.markAllAsTouched();
       return;
     };
 
     this.isLoading = true;
     this.errorMessage = '';
 
-    const { username, email, password } = this.form.value;
+    const { username, email, password } = this.formRegister.value;
     const credentials = { username, email, password };
 
     this.auth.login(credentials).pipe(take(1)).subscribe({

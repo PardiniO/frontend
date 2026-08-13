@@ -7,7 +7,7 @@ import { IBook } from "../../interfaces/book";
   styleUrl: './last-active-book.component.scss'
 })
 export class LastActiveBookComponent {
-  @Input() lastBook: IBook | undefined | null;
+/*  @Input() lastBook: IBook | undefined | null;
 
   get readLink(): string {
     return this.lastBook ? `/read/${this.lastBook.id}` : '/library';
@@ -16,4 +16,5 @@ export class LastActiveBookComponent {
   get progressPercentage(): number {
     return this.lastBook?.progress ?? 0;
   }
+*/
 }

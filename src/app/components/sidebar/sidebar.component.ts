@@ -6,11 +6,11 @@ import { Component } from '@angular/core';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
-  navItems = [
+/*  navItems = [
     { label: 'Dashboard', icon: 'fas fa-home', route: '/'},
     { label: 'Biblioteca', icon: 'fas fa-book', route: '/library'},
     { label: 'Estadísticas', icon: 'fas fa-chart-line', route: '/stats'},
     { label: 'Cargar Archivos', icon: 'fas fa-cloud-upload-alt', route: '/upload'},
     { label: 'Ajustes', icon: 'fas fa-cog', route: '/settings'}
-  ];
+  ];*/
 }

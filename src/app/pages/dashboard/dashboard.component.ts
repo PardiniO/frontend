@@ -10,7 +10,7 @@ import { catchError, last, Observable } from "rxjs";
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-  lastActiveBook$!: Observable<IBook | undefined>;
+  /*lastActiveBook$!: Observable<IBook | undefined>;
   booksReadCount: number = 0;
   totalReadingTime: string = '0h';
 
@@ -28,5 +28,5 @@ export class DashboardComponent {
     // simulación:
     this.booksReadCount = 42
     this.totalReadingTime = '25h'; // Debe venir de llamada al backend
-  }
+  }*/
 }

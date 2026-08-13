@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrl: './progress-bar.component.scss'
 })
 export class ProgressBarComponent {
-  @Input() currentPage: number = 0;
+/*  @Input() currentPage: number = 0;
   @Input() totalPages: number = 0;
   @Input() title: string = 'Titulo';
 
@@ -17,4 +17,5 @@ export class ProgressBarComponent {
     const percent = (this.currentPage / this.totalPages) * 100;
     return Math.min(100, Math.round(percent));
   }
+*/
 }

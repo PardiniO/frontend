@@ -5,15 +5,15 @@ import { IFolder } from "../../interfaces/folder";
 import { IReadingStatus } from "../../interfaces/reading";
 import { LibraryService } from "../../core/services/library.service";
 
-type BookStatus = IReadingStatus['status'] | 'all';
+// type BookStatus = IReadingStatus['status'] | 'all';
 
 @Component({
   selector: 'app-library',
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss'
 })
-export class LibraryComponent implements OnInit {
-  books$!: Observable<IBook[]>;
+export class LibraryComponent /*implements OnInit*/ {
+/*  books$!: Observable<IBook[]>;
   folders$!: Observable<IFolder[]>;
 
   activeFilter: BookStatus = 'leyendo';
@@ -95,5 +95,5 @@ export class LibraryComponent implements OnInit {
   closeCreateFolderModal(): void {
     this.isModalOpen = false;
     this.newFolderName = '';
-  }
+  }*/
 }
