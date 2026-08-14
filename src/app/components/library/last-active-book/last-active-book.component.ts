@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IBook } from "../../interfaces/book";
+import { IBook } from "../../../interfaces/book";
 
 @Component({
   selector: 'app-last-active-book',

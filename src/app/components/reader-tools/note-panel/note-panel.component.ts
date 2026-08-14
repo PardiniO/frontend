@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { NoteService } from "../../core/services/note.service";
-import { INote } from "../../interfaces/note";
+import { NoteService } from "../../../core/services/note.service";
+import { INote } from "../../../interfaces/note";
 
 @Component({
   selector: 'app-note-panel',
